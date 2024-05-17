@@ -1,0 +1,33 @@
+{
+  "Home": {
+    "hometitle": "قائمة الوظائف",
+    "search": "البحث حسب الكلمة الرئيسية",
+    "type": "النوع",
+    "department": "القسم",
+    "experienceLevel": "مستوى الخبرة",
+    "findJobsbtn": "العثور على وظائف",
+    "showdetailsbtn": "اظهر التفاصيل"
+  },
+  "details": {
+    "backhomebtn": "الرجوع إلى المنصة",
+    "applybtn": "التقدم لهذا العرض",
+    "jobDescription": "وصف الوظيفة",
+    "KeyResponsibilities": "المسؤوليات  ",
+    "SkillExperience": "المهارة والخبرة",
+    "jobOverview": "نظرة عامة على الوظيفة",
+    "JobPosted": "تاريخ  نشر الوظيفة",
+    "location": "مكان الوظيفة",
+    "offeredSalary": "الراتب المقدم ",
+    "expirationDate": " تاريخ انتهاء الصلاحية",
+    "experience": "الخبرة",
+    "cv": "السيرة الذاتية الخاصة بك",
+    "firstname": "الاسم ",
+    "lastname": "اللقب",
+    "email": "البريد الإلكتروني",
+    "send": "إرسال",
+    "cancel": "إلغاء",
+    "titreapplyform": "تقدم لهذه الوظيفة",
+    "emailremind": "ذكرني بهذه الوظيفة",
+    "selectedfile": "الملف المحدد"
+  }
+}

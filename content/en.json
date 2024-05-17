@@ -1,0 +1,33 @@
+{
+  "Home": {
+    "hometitle": " Job List ",
+    "search": "Search By Keyword",
+    "type": "Type",
+    "department": "Department",
+    "experienceLevel": "Experience Level",
+    "findJobsbtn": " Find Jobs",
+    "showdetailsbtn": "Show Details"
+  },
+  "details": {
+    "backhomebtn": "Back To Home",
+    "applybtn": "Apply Now",
+    "jobDescription": "Job Description",
+    "KeyResponsibilities": "Key Responsibilities",
+    "SkillExperience": "Skill & Experience",
+    "jobOverview": "Job Overview",
+    "JobPosted": "Job Posted",
+    "location": "Location",
+    "offeredSalary": "Offered Salary",
+    "expirationDate": " Expiration Date",
+    "experience": "Experience",
+    "cv": "Your CV",
+    "firstname": "First Name ",
+    "lastname": "Last Name",
+    "email": "Email Adress",
+    "send": "Send",
+    "cancel": "Cancel",
+    "titreapplyform": "Apply for this job",
+    "emailremind": "Remind Me With this Job",
+    "selectedfile": "Selected File"
+  }
+}
