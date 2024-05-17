@@ -17,6 +17,7 @@ import { useTranslations } from "next-intl";
 
 const JobOverview: FC = () => {
   const t = useTranslations("details");
+
   return (
     <Card
       elevation={0}
@@ -24,13 +25,13 @@ const JobOverview: FC = () => {
         backgroundColor: "#F9F9F9",
         p: 1,
         borderRadius: 3,
-        width: 320,
+        width: { xs: "100%", sm: 320 },
         marginTop: 2,
       }}
     >
       <CardHeader title={t("jobOverview")} sx={{ color: "#f1e719" }} />
-      <Stack direction={"column"} padding={1}>
-        <Stack direction={"row"} alignItems={"center"}>
+      <Stack direction="column" padding={1}>
+        <Stack direction="row" alignItems="center">
           <Box>
             <CalanderIcon height={32} width={32} />
           </Box>
@@ -66,7 +67,7 @@ const JobOverview: FC = () => {
             />
           </List>
         </Stack>
-        <Stack direction={"row"} alignItems={"center"}>
+        <Stack direction="row" alignItems="center">
           <Box>
             <LocatioIcon height={32} width={32} />
           </Box>
@@ -102,7 +103,7 @@ const JobOverview: FC = () => {
             />
           </List>
         </Stack>
-        <Stack direction={"row"} alignItems={"center"}>
+        <Stack direction="row" alignItems="center">
           <Box>
             <MoneyIcon height={32} width={32} />
           </Box>
@@ -138,7 +139,7 @@ const JobOverview: FC = () => {
             />
           </List>
         </Stack>
-        <Stack direction={"row"} alignItems={"center"}>
+        <Stack direction="row" alignItems="center">
           <Box>
             <ExpirationIcon height={32} width={32} />
           </Box>
@@ -174,7 +175,7 @@ const JobOverview: FC = () => {
             />
           </List>
         </Stack>
-        <Stack direction={"row"} alignItems={"center"}>
+        <Stack direction="row" alignItems="center">
           <Box>
             <JobIcon height={32} width={32} />
           </Box>

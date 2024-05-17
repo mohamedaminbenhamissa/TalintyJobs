@@ -27,20 +27,23 @@ export const JobDetails: FC = () => {
     setShowMail(false);
   };
   const t = useTranslations("details");
+
   return (
     <Card
       elevation={0}
       sx={{
         backgroundColor: "#F9F9F9",
-        p: 1,
-        marginLeft: 4,
-        marginRight: 4,
+        p: 2,
+        mx: { xs: 1, sm: 2, md: 4 },
         borderRadius: 3,
       }}
     >
       <Stack spacing={2} direction="column" padding={3}>
-        <Stack direction={"row"} justifyContent={"space-between"}>
-          <Stack spacing={5} direction="row">
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          justifyContent="space-between"
+        >
+          <Stack spacing={2} direction={{ xs: "column", md: "row" }} flex={1}>
             <Image
               src="/assets/iconly/iconly-glass-tick.svg"
               alt="icon"
@@ -49,17 +52,26 @@ export const JobDetails: FC = () => {
             />
 
             <Box flex={1}>
-              <Box display="flex" justifyContent="space-between">
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                flexWrap="wrap"
+              >
                 <Typography
                   color="text.secondary"
                   variant="subtitle1"
                   fontWeight="bold"
-                  fontSize={26}
+                  fontSize={{ xs: 20, md: 26 }}
                 >
                   Junior Graphic Designer (Web)
                 </Typography>
               </Box>
-              <Box display="flex" gap={3}>
+              <Box
+                display="flex"
+                flexDirection={{ xs: "column", sm: "row" }}
+                gap={3}
+                flexWrap="wrap"
+              >
                 <Box display="flex" alignItems="center" gap={1}>
                   <SvgIcon>
                     <JobIcon />
@@ -81,36 +93,36 @@ export const JobDetails: FC = () => {
                     <MoneyIcon />
                   </SvgIcon>
                   <Typography color="text.secondary" variant="body2">
-                    $150 -$180 /week
+                    $150 - $180 / week
                   </Typography>
                 </Box>
               </Box>
-              <Stack direction={"row"} gap={2} sx={{ marginTop: "6px" }}>
+              <Stack direction="row" gap={2} sx={{ mt: 1 }}>
                 <Typography
                   color="white"
                   border={1}
                   borderRadius={3}
-                  bgcolor={"#73cdf2"}
+                  bgcolor="#73cdf2"
                   variant="body2"
-                  px={4}
-                  py={1}
+                  px={2}
+                  py={0.5}
                 >
                   Full-Time
                 </Typography>
               </Stack>
             </Box>
-
-            <Divider />
           </Stack>
-          <Stack direction={"column"} alignItems="end">
+          <Divider flexItem sx={{ my: { xs: 2, md: 0 }, mx: { md: 2 } }} />
+          <Stack direction="column" alignItems="flex-end">
             <Typography
               color="text.secondary"
               variant="subtitle1"
               fontSize={12}
+              textAlign={{ xs: "center", md: "right" }}
             >
               Application Ends: 15/05/2024
             </Typography>
-            <Stack direction={"row"} alignItems="center" gap={2}>
+            <Stack direction="row" alignItems="center" gap={2}>
               <Button
                 sx={{
                   bgcolor: "#f1e719",

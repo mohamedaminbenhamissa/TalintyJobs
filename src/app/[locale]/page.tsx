@@ -9,15 +9,20 @@ export default function Home() {
   const t = useTranslations("Home");
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-start justify-between ">
+    <main className="flex min-h-screen w-full flex-col items-start justify-between">
+      {/* Add viewport meta tag */}
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
       <Box width={"100%"}>
-        <Grid spacing={4} direction={"column"}>
+        <Grid container spacing={4} direction={"column"}>
           <Stack
             direction={"row"}
             display={"flex"}
             justifyContent="space-between"
           >
-            <Typography variant="h5">{t("hometitle")}</Typography>
+            <Typography variant="h5" style={{ fontSize: "2rem" }}>
+              {t("hometitle")}
+            </Typography>
             <Stack direction="row" spacing={4}>
               <LocalSwitcher />
             </Stack>
