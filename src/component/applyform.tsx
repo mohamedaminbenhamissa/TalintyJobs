@@ -23,12 +23,12 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [fileName, setFileName] = useState(""); // New state for file name
-  const [fileError, setFileError] = useState(""); // New state for file error
-
+  const [fileName, setFileName] = useState("");
+  const [fileError, setFileError] = useState("");
+  const t = useTranslations("details");
   const onDrop = useCallback((acceptedFiles: File[], fileRejections: any[]) => {
     if (fileRejections.length > 0) {
-      setFileError("Only PDF or TXT files are allowed.");
+      setFileError(t("fileerror"));
       setFileName("");
     } else if (acceptedFiles.length > 0) {
       setFileName(acceptedFiles[0].name);
@@ -38,7 +38,7 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { "application/pdf": [], "text/plain": [] },
+    accept: { "application/pdf": [] },
   });
 
   const validateEmail = (email: string) => {
@@ -50,24 +50,24 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
     let isValid = true;
 
     if (!firstName) {
-      setFirstNameError("First Name cannot be empty.");
+      setFirstNameError(t("firstnameerror"));
       isValid = false;
     } else {
       setFirstNameError("");
     }
 
     if (!lastName) {
-      setLastNameError("Last Name cannot be empty.");
+      setLastNameError(t("lastnameerror"));
       isValid = false;
     } else {
       setLastNameError("");
     }
 
     if (!email) {
-      setEmailError("Email cannot be empty.");
+      setEmailError(t("emailerror"));
       isValid = false;
     } else if (!validateEmail(email)) {
-      setEmailError("Invalid email address.");
+      setEmailError(t("emailerror2"));
       isValid = false;
     } else {
       setEmailError("");
@@ -78,7 +78,6 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
     }
   };
 
-  const t = useTranslations("details");
   if (!visible) return null;
 
   return (
@@ -165,7 +164,7 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
                         {t("cv")}
                       </p>
                     )}
-                    <input {...getInputProps()} />
+                    <input {...getInputProps()} accept="application/pdf" />
                   </div>
                   {fileName && (
                     <Typography variant="body2" sx={{ mt: 1 }}>

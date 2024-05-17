@@ -28,6 +28,11 @@
     "cancel": "Cancel",
     "titreapplyform": "Apply for this job",
     "emailremind": "Remind Me With this Job",
-    "selectedfile": "Selected File"
+    "selectedfile": "Selected File",
+    "firstnameerror": "First Name cannot be empty.",
+    "lastnameerror": "Last Name cannot be empty.",
+    "emailerror": "Email cannot be empty.",
+    "emailerror2": "Invalid email address.",
+    "fileerror": "Only PDF or TXT files are allowed."
   }
 }

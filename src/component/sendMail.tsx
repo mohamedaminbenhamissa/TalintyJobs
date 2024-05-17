@@ -32,10 +32,10 @@ const SendMail: React.FC<mailProps> = ({ visible, onClose }) => {
   const handleSubmit = () => {
     let isValid = true;
     if (!email) {
-      setEmailError("Email cannot be empty.");
+      setEmailError(t("emailerror"));
       isValid = false;
     } else if (!validateEmail(email)) {
-      setEmailError("Invalid email address.");
+      setEmailError(t("emailerror2"));
       isValid = false;
     } else {
       setEmailError("");
