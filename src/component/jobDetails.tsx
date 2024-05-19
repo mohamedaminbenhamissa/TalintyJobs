@@ -97,40 +97,22 @@ export const JobDetails: FC = () => {
                   </Typography>
                 </Box>
               </Box>
-              <Stack direction="row" gap={2} sx={{ mt: 1 }}>
-                <Typography
-                  color="white"
-                  border={1}
-                  borderRadius={3}
-                  bgcolor="#73cdf2"
-                  variant="body2"
-                  px={2}
-                  py={0.5}
-                >
-                  Full-Time
-                </Typography>
-              </Stack>
             </Box>
           </Stack>
           <Divider flexItem sx={{ my: { xs: 2, md: 0 }, mx: { md: 2 } }} />
-          <Stack direction="column" alignItems="flex-end">
-            <Typography
-              color="text.secondary"
-              variant="subtitle1"
-              fontSize={12}
-              textAlign={{ xs: "center", md: "right" }}
-            >
-              Application Ends: 15/05/2024
-            </Typography>
+          <Stack direction="column" alignItems="flex-start">
             <Stack direction="row" alignItems="center" gap={2}>
               <Button
                 sx={{
-                  bgcolor: "#f1e719",
-                  px: 4,
-                  borderRadius: 5,
+                  bgcolor: "#F3CB05",
+                  pt: 2,
+                  pb: 2,
+                  pl: 8,
+                  pr: 8,
                   color: "#fff",
                   "&:hover": {
-                    bgcolor: "#f1e719",
+                    bgcolor: "#000",
+                    color: "#F3CB05",
                   },
                 }}
                 onClick={() => setShowForm(true)}
@@ -174,6 +156,24 @@ export const JobDetails: FC = () => {
                   </Box>
                 )}
               </Box>
+            </Stack>
+            <Stack direction="row">
+              <Typography
+                color="text.secondary"
+                variant="subtitle1"
+                fontSize={12}
+                textAlign={{ xs: "center", md: "right" }}
+              >
+                Application Ends:
+              </Typography>
+              <Typography
+                color="error"
+                variant="subtitle1"
+                fontSize={12}
+                sx={{ xs: "center", md: "right", fontWeight: "bolder" }}
+              >
+                15/05/2024
+              </Typography>
             </Stack>
           </Stack>
         </Stack>

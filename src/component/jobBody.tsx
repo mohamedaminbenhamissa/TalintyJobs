@@ -13,7 +13,7 @@ const JobBody = () => {
           sx={{
             gap: "1",
             marginBottom: 2,
-            color: "#f1e719",
+            color: "#F3CB05",
           }}
           variant="subtitle1"
         >
@@ -32,7 +32,7 @@ const JobBody = () => {
           sx={{
             gap: "1",
             marginTop: 2,
-            color: "#f1e719",
+            color: "#F3CB05",
           }}
           variant="subtitle1"
         >
@@ -89,7 +89,7 @@ const JobBody = () => {
           sx={{
             gap: "1",
             marginTop: 2,
-            color: "#f1e719",
+            color: "#F3CB05",
           }}
           variant="subtitle1"
         >

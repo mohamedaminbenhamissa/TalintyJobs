@@ -16,20 +16,20 @@ export const Logo: FC<LogoProps> = ({ backgroundColor }) => {
 
   switch (backgroundColor) {
     case BackgroundColor.LIGHT:
-      fillColor = "#f1e719";
+      fillColor = "#F3CB05";
       secondaryFillColor = "black";
       break;
     case BackgroundColor.DARK:
-      fillColor = "#f1e719";
+      fillColor = "#F3CB05";
       secondaryFillColor = "black";
       break;
     case BackgroundColor.YELLOW:
-      fillColor = "#f1e719";
+      fillColor = "#F3CB05";
       secondaryFillColor = "balck";
     case null:
     case undefined:
     default:
-      fillColor = "#f1e719";
+      fillColor = "#F3CB05";
       secondaryFillColor = "black";
   }
 

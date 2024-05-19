@@ -1,12 +1,15 @@
-import { alpha } from '@mui/system/colorManipulator';
-import { backdropClasses } from '@mui/material/Backdrop';
-import { filledInputClasses } from '@mui/material/FilledInput';
-import { outlinedInputClasses } from '@mui/material/OutlinedInput';
-import { paperClasses } from '@mui/material/Paper';
-import { tableCellClasses } from '@mui/material/TableCell';
-import { common } from '@mui/material/colors';
-import type { Components } from '@mui/material/styles/components';
-import type { PaletteColor, PaletteOptions } from '@mui/material/styles/createPalette';
+import { alpha } from "@mui/system/colorManipulator";
+import { backdropClasses } from "@mui/material/Backdrop";
+import { filledInputClasses } from "@mui/material/FilledInput";
+import { outlinedInputClasses } from "@mui/material/OutlinedInput";
+import { paperClasses } from "@mui/material/Paper";
+import { tableCellClasses } from "@mui/material/TableCell";
+import { common } from "@mui/material/colors";
+import type { Components } from "@mui/material/styles/components";
+import type {
+  PaletteColor,
+  PaletteOptions,
+} from "@mui/material/styles/createPalette";
 
 interface Config {
   palette: PaletteOptions;
@@ -35,7 +38,8 @@ export const createComponents = ({ palette }: Config): Components => {
       styleOverrides: {
         root: {
           [`&.${paperClasses.elevation1}`]: {
-            boxShadow: '0px 5px 22px rgba(0, 0, 0, 0.04), 0px 0px 0px 0.5px rgba(0, 0, 0, 0.03)',
+            boxShadow:
+              "0px 5px 22px rgba(0, 0, 0, 0.04), 0px 0px 0px 0.5px rgba(0, 0, 0, 0.03)",
           },
         },
       },
@@ -52,17 +56,17 @@ export const createComponents = ({ palette }: Config): Components => {
     },
     MuiCssBaseline: {
       styleOverrides: {
-        '#nprogress .bar': {
+        "#nprogress .bar": {
           backgroundColor: (palette.primary as PaletteColor).main,
         },
-        '.slick-dots li button': {
-          '&:before': {
+        ".slick-dots li button": {
+          "&:before": {
             fontSize: 10,
             color: (palette.primary as PaletteColor).main,
           },
         },
-        '.slick-dots li.slick-active button': {
-          '&:before': {
+        ".slick-dots li.slick-active button": {
+          "&:before": {
             color: (palette.primary as PaletteColor).main,
           },
         },
@@ -71,7 +75,7 @@ export const createComponents = ({ palette }: Config): Components => {
     MuiInputBase: {
       styleOverrides: {
         input: {
-          '&::placeholder': {
+          "&::placeholder": {
             color: palette.text!.secondary,
           },
         },
@@ -81,14 +85,14 @@ export const createComponents = ({ palette }: Config): Components => {
       styleOverrides: {
         root: {
           borderColor: palette.neutral![200],
-          '&:hover': {
+          "&:hover": {
             backgroundColor: palette.action!.hover,
           },
           [`&.${filledInputClasses.disabled}`]: {
-            backgroundColor: 'transparent',
+            backgroundColor: "transparent",
           },
           [`&.${filledInputClasses.focused}`]: {
-            backgroundColor: 'transparent',
+            backgroundColor: "transparent",
             borderColor: (palette.primary as PaletteColor).main,
             boxShadow: `${(palette.primary as PaletteColor).main} 0 0 0 2px`,
           },
@@ -102,23 +106,23 @@ export const createComponents = ({ palette }: Config): Components => {
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          '&:hover': {
+          "&:hover": {
             backgroundColor: palette.action!.hover,
             [`& .${outlinedInputClasses.notchedOutline}`]: {
               borderColor: palette.neutral![200],
             },
           },
           [`&.${outlinedInputClasses.focused}`]: {
-            backgroundColor: 'transparent',
+            backgroundColor: "transparent",
             [`& .${outlinedInputClasses.notchedOutline}`]: {
               borderColor: (palette.primary as PaletteColor).main,
-              borderWidth: '3px',
+              borderWidth: "3px",
             },
           },
           [`&.${filledInputClasses.error}`]: {
             [`& .${outlinedInputClasses.notchedOutline}`]: {
               borderColor: (palette.error as PaletteColor).main,
-              borderWidth: '3px',
+              borderWidth: "3px",
             },
           },
         },
@@ -166,7 +170,7 @@ export const createComponents = ({ palette }: Config): Components => {
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
-          backdropFilter: 'blur(6px)',
+          backdropFilter: "blur(6px)",
           background: alpha(palette.neutral![900], 0.8),
         },
       },

@@ -39,7 +39,8 @@ export default function Home() {
               categories="Design,Development"
               location="New York"
               salary="$150 - $180 /week"
-              jobtype="CDI"
+              jobType="CDI"
+              experienceLevel="Entry level"
             />
 
             <OverviewDoneTasks
@@ -48,7 +49,8 @@ export default function Home() {
               categories="Development"
               location="Tunisia"
               salary="$250 /week"
-              jobtype="CDI"
+              jobType="CDI"
+              experienceLevel="Entry level"
             />
             <OverviewDoneTasks
               icon="/assets/iconly/iconly-glass-paper.svg"
@@ -56,7 +58,8 @@ export default function Home() {
               categories="Development"
               location="France"
               salary="$200 /week"
-              jobtype="CDD"
+              jobType="CDD"
+              experienceLevel="Entry level"
             />
             <OverviewDoneTasks
               icon="/assets/iconly/iconly-glass-paper.svg"
@@ -64,7 +67,8 @@ export default function Home() {
               categories="Development"
               location="France"
               salary="$200 /week"
-              jobtype="CDD"
+              jobType="CDD"
+              experienceLevel="Entry level"
             />
             <OverviewDoneTasks
               icon="/assets/iconly/iconly-glass-paper.svg"
@@ -72,7 +76,8 @@ export default function Home() {
               categories="Development"
               location="France"
               salary="$200 /week"
-              jobtype="CDD"
+              jobType="CDD"
+              experienceLevel="Entry level"
             />
             <OverviewDoneTasks
               icon="/assets/iconly/iconly-glass-paper.svg"
@@ -80,7 +85,8 @@ export default function Home() {
               categories="Development"
               location="France"
               salary="$200 /week"
-              jobtype="Internship"
+              jobType="Internship"
+              experienceLevel="Entry level"
             />
             <OverviewDoneTasks
               icon="/assets/iconly/iconly-glass-paper.svg"
@@ -88,7 +94,8 @@ export default function Home() {
               categories="Development"
               location="France"
               salary="$200 /week"
-              jobtype="Internship"
+              jobType="Internship"
+              experienceLevel="Entry level"
             />
           </Box>
         </Grid>

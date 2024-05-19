@@ -3,46 +3,50 @@ import {
   Box,
   Button,
   Divider,
-  MenuItem,
   Paper,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-interface mailProps {
+interface MailProps {
   visible: boolean;
   onClose: () => void;
 }
 
-const SendMail: React.FC<mailProps> = ({ visible, onClose }) => {
+const SendMail: React.FC<MailProps> = ({ visible, onClose }) => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const t = useTranslations("details");
 
   const validateEmail = (email: string) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(String(email).toLowerCase());
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
-  const handleSubmit = () => {
-    let isValid = true;
+  useEffect(() => {
     if (!email) {
-      setEmailError(t("emailerror"));
-      isValid = false;
+      setEmailError("");
+      setIsEmailValid(false);
     } else if (!validateEmail(email)) {
       setEmailError(t("emailerror2"));
-      isValid = false;
+      setIsEmailValid(false);
     } else {
       setEmailError("");
+      setIsEmailValid(true);
     }
+  }, [email, t]);
 
-    if (isValid) {
-      console.log({ email });
+  const handleSubmit = () => {
+    if (isEmailValid) {
+    } else {
+      setEmailError(t("emailerror2"));
     }
   };
-  const t = useTranslations("details");
+
   if (!visible) return null;
   return (
     <Box
@@ -62,35 +66,37 @@ const SendMail: React.FC<mailProps> = ({ visible, onClose }) => {
           <Typography variant="subtitle2">{t("emailremind")}</Typography>
         </Box>
         <Divider />
-        <Box sx={{ mt: 2 }}>
-          <MenuItem>
-            <TextField
-              fullWidth
-              type="email"
-              label={t("email")}
-              name="email"
-              value={email}
-              error={!!emailError}
-              helperText={emailError}
-              InputProps={{ sx: { borderRadius: 4 } }}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </MenuItem>
+        <Box sx={{ p: 2 }}>
+          <Typography variant="subtitle2" mb={2}>
+            {t("emailCTA")}
+          </Typography>
+          <TextField
+            fullWidth
+            type="email"
+            label={t("email")}
+            name="email"
+            required
+            value={email}
+            error={!!emailError}
+            helperText={emailError}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </Box>
         <Box sx={{ p: 2 }}>
           <Stack direction={"row"} gap={2}>
             <Button
               fullWidth
               variant="outlined"
+              color="error"
               onClick={onClose}
-              sx={{ borderRadius: 4 }}
             >
               {t("cancel")}
             </Button>
             <Button
               fullWidth
-              variant="outlined"
-              sx={{ borderRadius: 4 }}
+              variant="contained"
+              color="success"
+              disabled={!isEmailValid}
               onClick={handleSubmit}
             >
               {t("send")}

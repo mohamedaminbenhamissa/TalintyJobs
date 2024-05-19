@@ -27,12 +27,13 @@
     "send": "Send",
     "cancel": "Cancel",
     "titreapplyform": "Apply for this job",
-    "emailremind": "Remind Me With this Job",
+    "emailremind": "Get Notified",
+    "emailCTA": "Don't miss out on your dream job! Bookmark this opportunity and enter your email to stay updated with the latest job openings and notifications tailored just for you.",
     "selectedfile": "Selected File",
     "firstnameerror": "First Name cannot be empty.",
     "lastnameerror": "Last Name cannot be empty.",
     "emailerror": "Email cannot be empty.",
     "emailerror2": "Invalid email address.",
-    "fileerror": "Only PDF or TXT files are allowed."
+    "fileError": "Only PDF or TXT files are allowed."
   }
 }

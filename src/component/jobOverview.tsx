@@ -29,7 +29,7 @@ const JobOverview: FC = () => {
         marginTop: 2,
       }}
     >
-      <CardHeader title={t("jobOverview")} sx={{ color: "#f1e719" }} />
+      <CardHeader title={t("jobOverview")} sx={{ color: "#F3CB05" }} />
       <Stack direction="column" padding={1}>
         <Stack direction="row" alignItems="center">
           <Box>

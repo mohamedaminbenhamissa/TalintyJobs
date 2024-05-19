@@ -1,8 +1,8 @@
-import type { ThemeOptions } from '@mui/material/styles/createTheme';
+import type { ThemeOptions } from "@mui/material/styles/createTheme";
 
-import type { Direction } from '..';
-import { createTypography } from './create-typography';
-import { createComponents } from './create-components';
+import type { Direction } from "..";
+import { createTypography } from "./create-typography";
+import { createComponents } from "./create-components";
 
 interface Config {
   direction?: Direction;
@@ -12,7 +12,7 @@ interface Config {
 // may have different values.
 
 export const createOptions = (config: Config): ThemeOptions => {
-  const { direction = 'ltr' } = config;
+  const { direction = "ltr" } = config;
 
   return {
     breakpoints: {

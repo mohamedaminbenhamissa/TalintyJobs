@@ -176,7 +176,7 @@ export const SideNav: FC<SideNavProps> = () => {
             <Stack spacing={1}>
               <Button
                 sx={{
-                  bgcolor: "#f1e719",
+                  bgcolor: "#F3CB05",
                   color: "#fff",
                   "&:hover": {
                     bgcolor: "black",

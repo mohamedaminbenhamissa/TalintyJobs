@@ -1,11 +1,14 @@
-import type { Theme } from '@mui/material/styles/createTheme';
-import { createTheme as createMuiTheme, responsiveFontSizes } from '@mui/material/styles';
+import type { Theme } from "@mui/material/styles/createTheme";
+import {
+  createTheme as createMuiTheme,
+  responsiveFontSizes,
+} from "@mui/material/styles";
 
-import { createOptions as createBaseOptions } from './base/create-options';
-import { createOptions as createDarkOptions } from './dark/create-options';
-import { createOptions as createLightOptions } from './light/create-options';
+import { createOptions as createBaseOptions } from "./base/create-options";
+import { createOptions as createDarkOptions } from "./dark/create-options";
+import { createOptions as createLightOptions } from "./light/create-options";
 
-declare module '@mui/material/styles/createPalette' {
+declare module "@mui/material/styles/createPalette" {
   interface ColorRange {
     50: string;
     100: string;
@@ -43,13 +46,13 @@ declare module '@mui/material/styles/createPalette' {
   }
 }
 
-export type ColorPreset = 'blue' | 'green' | 'indigo' | 'purple';
+export type ColorPreset = "blue" | "green" | "indigo" | "purple";
 
-export type Contrast = 'normal' | 'high';
+export type Contrast = "normal" | "high";
 
-export type Direction = 'ltr' | 'rtl';
+export type Direction = "ltr" | "rtl";
 
-export type PaletteMode = 'dark' | 'light';
+export type PaletteMode = "dark" | "light";
 
 interface ThemeConfig {
   colorPreset?: ColorPreset;
@@ -66,7 +69,7 @@ export const createTheme = (config: ThemeConfig): Theme => {
       direction: config.direction,
     }),
     // Options based on selected palette mode, color preset and contrast
-    config.paletteMode === 'dark'
+    config.paletteMode === "dark"
       ? createDarkOptions({
           colorPreset: config.colorPreset,
           contrast: config.contrast,
@@ -74,7 +77,7 @@ export const createTheme = (config: ThemeConfig): Theme => {
       : createLightOptions({
           colorPreset: config.colorPreset,
           contrast: config.contrast,
-        })
+        }),
   );
 
   if (config.responsiveFontSizes) {

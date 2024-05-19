@@ -26,15 +26,18 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
   const [fileName, setFileName] = useState("");
   const [fileError, setFileError] = useState("");
   const t = useTranslations("details");
-  const onDrop = useCallback((acceptedFiles: File[], fileRejections: any[]) => {
-    if (fileRejections.length > 0) {
-      setFileError(t("fileerror"));
-      setFileName("");
-    } else if (acceptedFiles.length > 0) {
-      setFileName(acceptedFiles[0].name);
-      setFileError("");
-    }
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFiles: File[], fileRejections: any[]) => {
+      if (fileRejections.length > 0) {
+        setFileError(t("fileError"));
+        setFileName("");
+      } else if (acceptedFiles.length > 0) {
+        setFileName(acceptedFiles[0].name);
+        setFileError("");
+      }
+    },
+    [t],
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,

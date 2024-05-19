@@ -1,5 +1,5 @@
 "use client";
-import { useState, type FC } from "react";
+import { useRef, useState, MouseEvent, type FC } from "react";
 import PropTypes from "prop-types";
 import ArrowRightIcon from "@untitled-ui/icons-react/build/esm/ArrowRight";
 import Box from "@mui/material/Box";
@@ -11,9 +11,9 @@ import Stack from "@mui/material/Stack";
 import SvgIcon from "@mui/material/SvgIcon";
 import Typography from "@mui/material/Typography";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-
+import RecentActorsOutlinedIcon from "@mui/icons-material/RecentActorsOutlined";
+import WorkHistoryOutlinedIcon from "@mui/icons-material/WorkHistoryOutlined";
 import Image from "next/image";
-import { Margin } from "@mui/icons-material";
 import JobIcon from "../../public/assets/JobIcon";
 import LocatioIcon from "../../public/assets/LocatioIcon";
 import MoneyIcon from "../../public/assets/MoneyIcon";
@@ -29,8 +29,8 @@ interface OverviewDoneTasksProps {
   categories: string;
   location: string;
   salary: string;
-
-  jobtype: string;
+  experienceLevel: string;
+  jobType: string;
 }
 
 export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
@@ -39,18 +39,29 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
   categories,
   location,
   salary,
-
-  jobtype,
+  jobType,
+  experienceLevel,
 }) => {
-  const [showmail, setShowMail] = useState(false);
+  const [showMail, setShowMail] = useState(false);
   const router = useRouter();
+  const bookMarkRef = useRef<HTMLButtonElement>(null);
   const handleClose = () => {
     setShowMail(false);
   };
   const locale = useLocale();
 
-  const handleNavigate = () => {
+  const handleNavigate = (event: MouseEvent<HTMLDivElement>) => {
+    if (
+      bookMarkRef.current &&
+      bookMarkRef.current.contains(event.target as Node)
+    ) {
+      event.stopPropagation();
+      return;
+    }
     router.push(`/${locale}/details`);
+  };
+  const handleBookmark = () => {
+    setShowMail(true);
   };
 
   const t = useTranslations("Home");
@@ -62,6 +73,7 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
             backgroundColor: "white",
             p: 1,
             borderRadius: 3,
+            cursor: "pointer",
           }}
         >
           <Stack spacing={2} direction="column">
@@ -79,12 +91,16 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
                     {title}
                   </Typography>
 
-                  <IconButton onClick={() => handleNavigate()}>
+                  <IconButton
+                    ref={bookMarkRef}
+                    onClick={() => handleBookmark()}
+                    sx={{ zIndex: 2 }}
+                  >
                     <BookmarkBorderIcon />
                   </IconButton>
                 </Box>
                 <Box position="relative">
-                  {showmail && (
+                  {showMail && (
                     <Box
                       position="fixed"
                       top={0}
@@ -96,20 +112,27 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
                       justifyContent="center"
                       alignItems="center"
                     >
-                      <SendMail onClose={handleClose} visible={showmail} />
+                      <SendMail onClose={handleClose} visible={showMail} />
                     </Box>
                   )}
                 </Box>
                 <Box display="flex" gap={3}>
                   <Box display="flex" alignItems="center" gap={1}>
                     <SvgIcon>
-                      <JobIcon />
+                      <RecentActorsOutlinedIcon sx={{ color: "#F3CB05" }} />
                     </SvgIcon>
                     <Typography color="text.secondary" variant="body2">
                       {categories}
                     </Typography>
                   </Box>
-
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <SvgIcon>
+                      <JobIcon />
+                    </SvgIcon>
+                    <Typography color="text.secondary" variant="body2">
+                      {jobType}
+                    </Typography>
+                  </Box>
                   <Box display="flex" alignItems="center" gap={1}>
                     <SvgIcon>
                       <LocatioIcon />
@@ -126,40 +149,20 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
                       {salary}
                     </Typography>
                   </Box>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <SvgIcon>
+                      <WorkHistoryOutlinedIcon sx={{ color: "#F3CB05" }} />
+                    </SvgIcon>
+                    <Typography color="text.secondary" variant="body2">
+                      {experienceLevel}
+                    </Typography>
+                  </Box>
                 </Box>
-                <Stack direction={"row"} gap={2} sx={{ marginTop: "6px" }}>
-                  <Typography
-                    color="white"
-                    border={1}
-                    borderRadius={3}
-                    bgcolor={jobtype ? "#73cdf2" : "transparent"}
-                    variant="body2"
-                    px={4}
-                    py={1}
-                  >
-                    {jobtype}
-                  </Typography>
-                </Stack>
               </Box>
 
               <Divider />
             </Stack>
-
-            <CardActions>
-              <Link href="details">
-                <Button
-                  color="inherit"
-                  startIcon={
-                    <SvgIcon>
-                      <ArrowRightIcon />
-                    </SvgIcon>
-                  }
-                  size="small"
-                >
-                  {t("showdetailsbtn")}
-                </Button>
-              </Link>
-            </CardActions>
+            <Box>ss</Box>
           </Stack>
         </Card>
       </div>
@@ -173,5 +176,6 @@ OverviewDoneTasks.propTypes = {
   categories: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
   salary: PropTypes.string.isRequired,
-  jobtype: PropTypes.string.isRequired,
+  jobType: PropTypes.string.isRequired,
+  experienceLevel: PropTypes.string.isRequired,
 };

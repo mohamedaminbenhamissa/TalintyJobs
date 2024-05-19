@@ -1,18 +1,17 @@
 "use client";
 
-import React, { ChangeEvent, useTransition } from "react";
+import React, { useTransition } from "react";
 
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import {
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
 } from "@mui/material";
 import EnglishIcon from "../../public/assets/englishIcon";
-import ArabIocn from "../../public/assets/arabIcon";
+import ArabIcon from "../../public/assets/arabIcon";
 export default function LocalSwitcher() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -25,24 +24,26 @@ export default function LocalSwitcher() {
     });
   };
   return (
-    <>
-      <FormControl>
-        <Select
-          defaultValue={localActive}
-          disabled={isPending}
-          variant="outlined"
-          size="small"
-          onChange={onSelectChange}
-          sx={{ padding: 0 }}
-        >
-          <MenuItem value="en">
-            <EnglishIcon />
-          </MenuItem>
-          <MenuItem value="ar">
-            <ArabIocn />
-          </MenuItem>
-        </Select>
-      </FormControl>
-    </>
+    <Select
+      defaultValue={localActive}
+      disabled={isPending}
+      variant="outlined"
+      size="small"
+      onChange={onSelectChange}
+      sx={{ display: "flex", alignItems: "center" }}
+    >
+      <MenuItem
+        value="en"
+        sx={{ zIndex: 9, display: "flex", justifyContent: "center" }}
+      >
+        <EnglishIcon />
+      </MenuItem>
+      <MenuItem
+        value="ar"
+        sx={{ zIndex: 9, display: "flex", justifyContent: "center" }}
+      >
+        <ArabIcon />
+      </MenuItem>
+    </Select>
   );
 }

@@ -1,4 +1,4 @@
-function ArabIocn({
+function ArabIcon({
   width = 17,
   height = 19,
 }: {
@@ -30,4 +30,4 @@ function ArabIocn({
   );
 }
 
-export default ArabIocn;
+export default ArabIcon;
