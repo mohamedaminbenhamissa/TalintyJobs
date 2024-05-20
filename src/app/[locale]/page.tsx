@@ -1,15 +1,29 @@
 "use client";
-import { OverviewDoneTasks } from "@/component/overview-done-tasks";
-import { useTranslations } from "next-intl";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Box, Grid, Stack, Typography } from "@mui/material";
-import React from "react";
+
 import LocalSwitcher from "@/component/localSwitcher";
+import { OverviewDoneTasks } from "@/component/overview-done-tasks";
 
 export default function Home() {
-  const t = useTranslations("Home");
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    async function fetchJobs() {
+      try {
+        const response = await axios.get("https://api.talinty.com/api/v1/jobs");
+        setJobs(response.data);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    }
+
+    fetchJobs();
+  }, []);
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-start justify-between ">
+    <main className="flex min-h-screen w-full flex-col items-start justify-between">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
       <Box width={"100%"}>
@@ -19,84 +33,29 @@ export default function Home() {
             display={"flex"}
             justifyContent="space-between"
           >
-            <Typography variant="h5">{t("hometitle")}</Typography>
+            <Typography variant="h5">Latest Jobs</Typography>
             <Stack direction="row" spacing={4}>
               <LocalSwitcher />
             </Stack>
           </Stack>
 
-          <Box
-            sx={{
-              mt: 4,
-              display: "flex",
-              gap: "15px",
-              flexDirection: "column",
-            }}
-          >
-            <OverviewDoneTasks
-              icon="/assets/iconly/iconly-glass-tick.svg"
-              title="Junior Graphic Designer (Web)"
-              categories="Design,Development"
-              location="New York"
-              salary="$150 - $180 /week"
-              jobType="CDI"
-              experienceLevel="Entry level"
-            />
-
-            <OverviewDoneTasks
-              icon="/assets/iconly/iconly-glass-info.svg"
-              title="FrontEnd Developer"
-              categories="Development"
-              location="Tunisia"
-              salary="$250 /week"
-              jobType="CDI"
-              experienceLevel="Entry level"
-            />
-            <OverviewDoneTasks
-              icon="/assets/iconly/iconly-glass-paper.svg"
-              title="BackEnd Developer"
-              categories="Development"
-              location="France"
-              salary="$200 /week"
-              jobType="CDD"
-              experienceLevel="Entry level"
-            />
-            <OverviewDoneTasks
-              icon="/assets/iconly/iconly-glass-paper.svg"
-              title="BackEnd Developer"
-              categories="Development"
-              location="France"
-              salary="$200 /week"
-              jobType="CDD"
-              experienceLevel="Entry level"
-            />
-            <OverviewDoneTasks
-              icon="/assets/iconly/iconly-glass-paper.svg"
-              title="BackEnd Developer"
-              categories="Development"
-              location="France"
-              salary="$200 /week"
-              jobType="CDD"
-              experienceLevel="Entry level"
-            />
-            <OverviewDoneTasks
-              icon="/assets/iconly/iconly-glass-paper.svg"
-              title="BackEnd Developer"
-              categories="Development"
-              location="France"
-              salary="$200 /week"
-              jobType="Internship"
-              experienceLevel="Entry level"
-            />
-            <OverviewDoneTasks
-              icon="/assets/iconly/iconly-glass-paper.svg"
-              title="BackEnd Developer"
-              categories="Development"
-              location="France"
-              salary="$200 /week"
-              jobType="Internship"
-              experienceLevel="Entry level"
-            />
+          <Box width={"100%"}>
+            <Grid container spacing={4}>
+              {jobs.map((job) => (
+                <Grid item xs={12} md={6} lg={4} key={job._id}>
+                  <OverviewDoneTasks
+                    icon={job.image}
+                    title={job.name || "Not available"}
+                    categories={job.department || "Not available"}
+                    location={job.location || "Not available"}
+                    salary={job.salary || "Not available"}
+                    jobType={job.type || "Not available"}
+                    experienceLevel={job.minExperience || "Not available"}
+                    description={job.description || "Not available"}
+                  />
+                </Grid>
+              ))}
+            </Grid>
           </Box>
         </Grid>
       </Box>

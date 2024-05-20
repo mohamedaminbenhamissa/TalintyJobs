@@ -13,14 +13,31 @@ import Image from "next/image";
 import JobIcon from "../../public/assets/JobIcon";
 import LocatioIcon from "../../public/assets/LocatioIcon";
 import MoneyIcon from "../../public/assets/MoneyIcon";
-import { IconButton } from "@mui/material";
 import ApplyForm from "./applyform";
 import SendMail from "./sendMail";
 import { useTranslations } from "next-intl";
 import WorkHistoryOutlinedIcon from "@mui/icons-material/WorkHistoryOutlined";
 import RecentActorsOutlinedIcon from "@mui/icons-material/RecentActorsOutlined";
 
-export const JobDetails: FC = () => {
+interface JobDetailsProps {
+  icon: string;
+  title: string;
+  department: string;
+  location: string;
+  salary: string;
+  experienceLevel: string;
+  jobType: string;
+}
+
+export const JobDetails: FC<JobDetailsProps> = ({
+  icon,
+  title,
+  department,
+  location,
+  salary,
+  jobType,
+  experienceLevel,
+}) => {
   const [showform, setShowForm] = useState(false);
   const [showmail, setShowMail] = useState(false);
 
@@ -65,7 +82,7 @@ export const JobDetails: FC = () => {
                   fontWeight="bold"
                   fontSize={{ xs: 20, md: 26 }}
                 >
-                  Junior Graphic Designer (Web)
+                  {title}
                 </Typography>
               </Box>
               <Box
@@ -79,7 +96,7 @@ export const JobDetails: FC = () => {
                     <RecentActorsOutlinedIcon sx={{ color: "#F3CB05" }} />
                   </SvgIcon>
                   <Typography color="text.secondary" variant="body2">
-                    Design,Development
+                    {department}
                   </Typography>
                 </Box>
                 <Box display="flex" alignItems="center" gap={1}>
@@ -87,7 +104,7 @@ export const JobDetails: FC = () => {
                     <JobIcon />
                   </SvgIcon>
                   <Typography color="text.secondary" variant="body2">
-                    CDI
+                    {jobType}
                   </Typography>
                 </Box>
                 <Box display="flex" alignItems="center" gap={1}>
@@ -95,7 +112,7 @@ export const JobDetails: FC = () => {
                     <LocatioIcon />
                   </SvgIcon>
                   <Typography color="text.secondary" variant="body2">
-                    New York
+                    {location}
                   </Typography>
                 </Box>
                 <Box display="flex" alignItems="center" gap={1}>
@@ -103,7 +120,7 @@ export const JobDetails: FC = () => {
                     <MoneyIcon />
                   </SvgIcon>
                   <Typography color="text.secondary" variant="body2">
-                    $150 - $180 / week
+                    {salary}
                   </Typography>
                 </Box>
                 <Box display="flex" alignItems="center" gap={1}>
@@ -111,7 +128,7 @@ export const JobDetails: FC = () => {
                     <WorkHistoryOutlinedIcon sx={{ color: "#F3CB05" }} />
                   </SvgIcon>
                   <Typography color="text.secondary" variant="body2">
-                    Entry Level
+                    {experienceLevel}
                   </Typography>
                 </Box>
               </Box>
@@ -164,7 +181,7 @@ export const JobDetails: FC = () => {
                   color: "#000",
                   "&:hover": {
                     bgcolor: "#F3CB05",
-                    color: "#F3CB05",
+                    color: "#fff",
                   },
                 }}
                 onClick={() => setShowMail(true)}
@@ -204,7 +221,7 @@ export const JobDetails: FC = () => {
                 fontSize={12}
                 sx={{ xs: "center", md: "right", fontWeight: "bolder" }}
               >
-                15/05/2024
+                {expireDate}{" "}
               </Typography>
             </Stack>
           </Stack>

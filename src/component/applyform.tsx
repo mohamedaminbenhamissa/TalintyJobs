@@ -1,4 +1,4 @@
-import { useCallback, useState, type FC } from "react";
+import { useCallback, useState, useEffect, FC } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -10,6 +10,7 @@ import { Stack } from "@mui/material";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { useDropzone } from "react-dropzone";
 import { useTranslations } from "next-intl";
+import axios from "axios";
 
 interface FormProps {
   visible: boolean;
@@ -25,6 +26,7 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
   const [emailError, setEmailError] = useState("");
   const [fileName, setFileName] = useState("");
   const [fileError, setFileError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const t = useTranslations("details");
   const onDrop = useCallback(
     (acceptedFiles: File[], fileRejections: any[]) => {
@@ -36,7 +38,7 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
         setFileError("");
       }
     },
-    [t],
+    [t]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -49,7 +51,7 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
     return re.test(String(email).toLowerCase());
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let isValid = true;
 
     if (!firstName) {
@@ -77,7 +79,24 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
     }
 
     if (isValid) {
-      console.log({ firstName, lastName, email });
+      setSubmitting(true);
+      try {
+        const response = await axios.post("/api/submitForm", {
+          firstName,
+          lastName,
+          email,
+          fileName,
+        });
+        console.log("Form submitted successfully:", response.data);
+
+        alert("Form submitted successfully!");
+      } catch (error) {
+        console.error("Error submitting form:", error);
+
+        alert("Failed to submit form. Please try again later.");
+      } finally {
+        setSubmitting(false);
+      }
     }
   };
 
@@ -132,7 +151,6 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
                   onChange={(e) => setFirstName(e.target.value)}
                   error={!!firstNameError}
                   helperText={firstNameError}
-                  InputProps={{ sx: { borderRadius: 4 } }}
                 />
                 <TextField
                   fullWidth
@@ -143,7 +161,6 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
                   onChange={(e) => setLastName(e.target.value)}
                   error={!!lastNameError}
                   helperText={lastNameError}
-                  InputProps={{ sx: { borderRadius: 4 } }}
                 />
                 <TextField
                   fullWidth
@@ -155,7 +172,6 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
                   onChange={(e) => setEmail(e.target.value)}
                   error={!!emailError}
                   helperText={emailError}
-                  InputProps={{ sx: { borderRadius: 4 } }}
                 />
                 <Box sx={{ marginTop: 2 }}>
                   <div {...getRootProps()}>
@@ -187,17 +203,18 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
                       fullWidth
                       variant="outlined"
                       onClick={onClose}
-                      sx={{ borderRadius: 4 }}
+                      color="error"
                     >
                       {t("cancel")}
                     </Button>
                     <Button
                       fullWidth
                       variant="outlined"
-                      sx={{ borderRadius: 4 }}
                       onClick={handleSubmit}
+                      color="success"
+                      disabled={submitting}
                     >
-                      {t("send")}
+                      {submitting ? t("submitting") : t("send")}
                     </Button>
                   </Stack>
                 </Box>
