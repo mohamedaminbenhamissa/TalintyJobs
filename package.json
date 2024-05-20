@@ -13,8 +13,8 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.17",
-    "@mui/material": "^5.15.17",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+    "@mui/system": "^5.15.15",
     "@untitled-ui/icons-react": "^0.1.2",
     "i18next": "^23.11.4",
     "i18next-browser-languagedetector": "^8.0.0",
@@ -25,6 +25,7 @@
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",
     "react-i18next": "^14.1.1",
+    "react-share": "^5.1.0",
     "simplebar": "^6.2.6",
     "simplebar-react": "^3.2.5",
     "styled-components": "^6.1.11"

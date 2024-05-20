@@ -1,0 +1,48 @@
+{
+    "jobs": [
+        {
+            "_id": "6569e744a0b3ff8b1558ff1f",
+            "name": "Interfaçage de REDMINE avec les différents canaux",
+            "slug": "interfacage-de-redmine-avec-les-differents-canaux",
+            "description": "<p>Plongez dans l’univers de projets stimulants…</p><p>#ASTROLAB recrute un stagiaire PFE avec opportunité d’emploi</p><p>Vous souhaitez mêler développement frontend et backend au sein d'une équipe d’experts ?</p><p>Vous aimez ou avez une appétence pour les nouvelles technologies, l'T, la culture web et digitale ?</p><p>Rejoignez ASTROLAB et relevez le challenge avec nous !</p><p><br></p><p><strong style=\"color: rgb(0, 0, 0);\">Projet #</strong><strong>B06_2024</strong></p><p><br></p><h1>Ta mission🎯</h1><p>Le projet consiste à développer l'ouverture de redmine sur les différents canaux à travers des plugins et des web services à mettre en place</p><p><br></p><h1>Ton Profil 👉</h1><ul><li>À la recherche d'un stage de fin d'études avec un intérêt marqué pour le développement de solutions autour de Redmine.</li><li>Formation en cours dans le domaine du développement informatique, de l'informatique, ou des domaines connexes.</li><li>Compréhension de base des concepts liés au développement de plugins et de web services pour Redmine.</li><li>Volonté d'apprendre et de développer des compétences dans l'ouverture de Redmine sur différents canaux.</li><li>Capacité à assimiler les principes fondamentaux liés à l'intégration de Redmine avec d'autres systèmes par le biais de web services.</li><li>Connaissance de base des langages de programmation utilisés dans le développement de plugins pour Redmine.</li><li>Aptitude à travailler de manière autonome et à collaborer avec des équipes interfonctionnelles.</li><li>Rigoureux(se), curieux(se), avec une approche pratique pour résoudre des problèmes liés au développement d'extensions pour Redmine.</li><li>La démonstration d'une compréhension préalable du développement autour de Redmine, même par le biais de projets personnels, serait un atout.</li></ul><h1>Durée&nbsp;<a href=\"https://emojipedia.org/calendar/\" rel=\"noopener noreferrer\" target=\"_blank\">📅</a></h1><ul><li>4-6 mois</li></ul>",
+            "location": "Tunis",
+            "type": "PFE",
+            "remote": "halfRemote",
+            "image": "fd7ab0ee5cfff9543901000912415c07.png",
+			"department":"Marketing",
+			"minExperience":"Entry level",
+			"expire":"2023-12-01T14:01:40.220Z",
+        },
+        {
+            "_id": "6569e707a0b3ff8b1558ff13",
+            "name": "Mise en place d'un dashboard  pour le suivi et le pilotage de l'exploitation des outils digitaux",
+            "slug": "mise-en-place-dun-dashboard-pour-le-suivi-et-le-pilotage-de-lexploitation-des-outils-digitaux",
+            "description": "<p>Plongez dans l’univers de projets stimulants…</p><p>#ASTROLAB recrute un stagiaire PFE avec opportunité d’emploi</p><p>Vous souhaitez mêler développement frontend et backend au sein d'une équipe d’experts ?</p><p>Vous aimez ou avez une appétence pour les nouvelles technologies, l'T, la culture web et digitale ?</p><p>Rejoignez ASTROLAB et relevez le challenge avec nous !</p><p><br></p><p><strong style=\"color: rgb(0, 0, 0);\">Projet #</strong><strong>P04_2024</strong></p><p><br></p><h1>Ta mission🎯</h1><p>Cet outil permet de collecter la data client provenant du digital, la consolider, et donner comme output la rentabilité et les scénarios d'optimisation de l'exploitation pour améliorer le ROI</p><p><br></p><h1>Ton Profil 👉</h1><ul><li>À la recherche d'un stage de fin d'études avec un intérêt marqué pour le développement de dashboards d'exploitation d'outils digitaux.</li><li>Formation en cours dans le domaine de la data science, de l'informatique, ou des domaines connexes.</li><li>Compréhension de base des concepts liés à la création de dashboards pour le suivi et le pilotage de l'exploitation des outils digitaux.</li><li>Volonté d'apprendre et de développer des compétences dans la collecte et la consolidation de la data client digitale.</li><li>Capacité à assimiler les principes fondamentaux liés à l'analyse de données pour évaluer la rentabilité et proposer des scénarios d'optimisation.</li><li>Connaissance de base des outils de visualisation de données, tels que Tableau, Power BI, ou équivalents.</li><li>Aptitude à travailler de manière autonome et à collaborer avec des équipes inter fonctionnelles.</li><li>Rigoureux(se), curieux(se), avec une approche pratique pour résoudre des problèmes liés au suivi d'exploitation d'outils digitaux.</li><li>La démonstration d'une compréhension préalable du développement de dashboards ou d'analyses de données, même par le biais de projets personnels, serait un atout.</li></ul><h1>Durée&nbsp;<a href=\"https://emojipedia.org/calendar/\" rel=\"noopener noreferrer\" target=\"_blank\">📅</a></h1><ul><li>4-6 mois</li></ul>",
+            "location": "Sousse",
+            "type": "PFE",
+            "remote": "halfRemote",
+            "image": "120e68923c630613201adc29e8861f26.png",
+            "created": "2023-12-01T14:00:39.940Z"
+        },
+    ],
+    "jobTypes": [
+        "CDI",
+        "PFE",
+        "STAGE",
+		"etc."
+    ],
+    "remoteTypes": [
+        "noRemote",
+        "halfRemote"
+		"fullRemote"
+    ],
+	"departments": [
+        "Dev",
+        "Marketing",
+        "etc."
+    ],
+	"minExperience": [
+        "Entry level",
+        "etc."
+    ]
+}

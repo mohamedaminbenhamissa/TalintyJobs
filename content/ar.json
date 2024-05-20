@@ -6,7 +6,12 @@
     "department": "القسم",
     "experienceLevel": "مستوى الخبرة",
     "findJobsbtn": "العثور على وظائف",
-    "showdetailsbtn": "اظهر التفاصيل"
+    "showdetailsbtn": "اظهر التفاصيل",
+    "remoteTypes": "أنواع العمل عن بُعد",
+    "noRemote": "غير متاح عن بُعد",
+    "halfRemote": "جزئي عن بُعد",
+    "fullRemote": "كامل عن بُعد",
+    "Share": "شارك هذه الفرصة مع مجتمعك."
   },
   "details": {
     "backhomebtn": "الرجوع إلى المنصة",

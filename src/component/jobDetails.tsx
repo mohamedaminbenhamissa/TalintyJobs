@@ -17,6 +17,8 @@ import { IconButton } from "@mui/material";
 import ApplyForm from "./applyform";
 import SendMail from "./sendMail";
 import { useTranslations } from "next-intl";
+import WorkHistoryOutlinedIcon from "@mui/icons-material/WorkHistoryOutlined";
+import RecentActorsOutlinedIcon from "@mui/icons-material/RecentActorsOutlined";
 
 export const JobDetails: FC = () => {
   const [showform, setShowForm] = useState(false);
@@ -74,10 +76,18 @@ export const JobDetails: FC = () => {
               >
                 <Box display="flex" alignItems="center" gap={1}>
                   <SvgIcon>
-                    <JobIcon />
+                    <RecentActorsOutlinedIcon sx={{ color: "#F3CB05" }} />
                   </SvgIcon>
                   <Typography color="text.secondary" variant="body2">
                     Design,Development
+                  </Typography>
+                </Box>
+                <Box display="flex" alignItems="center" gap={1}>
+                  <SvgIcon>
+                    <JobIcon />
+                  </SvgIcon>
+                  <Typography color="text.secondary" variant="body2">
+                    CDI
                   </Typography>
                 </Box>
                 <Box display="flex" alignItems="center" gap={1}>
@@ -94,6 +104,14 @@ export const JobDetails: FC = () => {
                   </SvgIcon>
                   <Typography color="text.secondary" variant="body2">
                     $150 - $180 / week
+                  </Typography>
+                </Box>
+                <Box display="flex" alignItems="center" gap={1}>
+                  <SvgIcon>
+                    <WorkHistoryOutlinedIcon sx={{ color: "#F3CB05" }} />
+                  </SvgIcon>
+                  <Typography color="text.secondary" variant="body2">
+                    Entry Level
                   </Typography>
                 </Box>
               </Box>
@@ -136,9 +154,23 @@ export const JobDetails: FC = () => {
                   </Box>
                 )}
               </Box>
-              <IconButton onClick={() => setShowMail(true)}>
+              <Button
+                sx={{
+                  bgcolor: "#F9F9F9",
+                  pt: 2,
+                  pb: 2,
+                  pl: 2,
+                  pr: 2,
+                  color: "#000",
+                  "&:hover": {
+                    bgcolor: "#F3CB05",
+                    color: "#F3CB05",
+                  },
+                }}
+                onClick={() => setShowMail(true)}
+              >
                 <BookmarkBorderIcon />
-              </IconButton>
+              </Button>
               <Box position="relative">
                 {showmail && (
                   <Box

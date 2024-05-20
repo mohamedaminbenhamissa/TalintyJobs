@@ -6,7 +6,12 @@
     "department": "Department",
     "experienceLevel": "Experience Level",
     "findJobsbtn": " Find Jobs",
-    "showdetailsbtn": "Show Details"
+    "showdetailsbtn": "Show Details",
+    "remoteTypes": "Remote Types",
+    "noRemote": "No Remote",
+    "halfRemote": "Half Remote",
+    "fullRemote": "Full Remote",
+    "Share": "Share this opportunity "
   },
   "details": {
     "backhomebtn": "Back To Home",
