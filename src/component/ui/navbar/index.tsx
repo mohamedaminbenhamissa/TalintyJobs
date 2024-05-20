@@ -72,11 +72,21 @@ const switches: SwitchOptions[] = [
   { text: "4 Years", value: "4years" },
   { text: "> 5 Years", value: "5years" },
 ];
+type remoteTypeOption = {
+  text: string;
+  value: string;
+};
 
 export const SideNav: FC<SideNavProps> = () => {
   const pathname = usePathname();
   const t = useTranslations("Home");
   const locale = useLocale();
+
+  const remotetypesOpt: remoteTypeOption[] = [
+    { text: t("noRemote"), value: "noRemote " },
+    { text: t("halfRemote"), value: "halfRemote" },
+    { text: t("fullRemote"), value: "fullRemote" },
+  ];
 
   const linksList = [`/${locale}/details`];
   if (linksList.includes(pathname)) return;
@@ -87,7 +97,7 @@ export const SideNav: FC<SideNavProps> = () => {
       PaperProps={{
         elevation: 3,
         sx: {
-          overflowY: "hidden",
+          overflowY: "auto",
           maxHeight: "100vh",
           backgroundColor: "white",
           position: "sticky",
@@ -96,7 +106,7 @@ export const SideNav: FC<SideNavProps> = () => {
       }}
       variant="permanent"
     >
-      <Stack sx={{ height: "100%" }}>
+      <Stack sx={{ height: "100%", overflowY: "auto" }}>
         <Stack alignItems="center" direction="row" spacing={2} sx={{ p: 2 }}>
           <Logo />
         </Stack>
@@ -107,7 +117,7 @@ export const SideNav: FC<SideNavProps> = () => {
               <Typography variant="subtitle2">{t("search")}</Typography>
               <OutlinedInput
                 fullWidth
-                placeholder="Job title, keywords..."
+                placeholder={t("search")}
                 sx={{ color: "#000" }}
                 startAdornment={
                   <InputAdornment position="start">
@@ -129,7 +139,25 @@ export const SideNav: FC<SideNavProps> = () => {
                     variant="outlined"
                     fullWidth
                     style={{ color: "#fff" }}
-                    label="Type"
+                    label={t("type")}
+                    name="type"
+                  />
+                )}
+              />
+            </Stack>
+
+            <Stack spacing={1}>
+              <Typography variant="subtitle2">{t("remoteTypes")}</Typography>
+              <Autocomplete
+                getOptionLabel={(option: Option) => option.text}
+                options={remotetypesOpt}
+                renderInput={(params): JSX.Element => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    fullWidth
+                    style={{ color: "#fff" }}
+                    label={t("remoteTypes")}
                     name="type"
                   />
                 )}
@@ -147,7 +175,7 @@ export const SideNav: FC<SideNavProps> = () => {
                     variant="outlined"
                     fullWidth
                     style={{ color: "#fff" }}
-                    label="Department"
+                    label={t("department")}
                     name="department"
                   />
                 )}
@@ -166,7 +194,7 @@ export const SideNav: FC<SideNavProps> = () => {
                     variant="outlined"
                     fullWidth
                     style={{ color: "#fff" }}
-                    label="Experience Level"
+                    label={t("experienceLevel")}
                     name="experienceLevel"
                   />
                 )}

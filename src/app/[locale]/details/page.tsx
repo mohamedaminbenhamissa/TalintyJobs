@@ -5,9 +5,11 @@ import JobOverview from "@/component/jobOverview";
 
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import PriviousIcon from "../../../../public/assets/priviousIcon";
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import LocalSwitcher from "@/component/localSwitcher";
 
 export default function Details() {
   const t = useTranslations("details");
@@ -23,11 +25,12 @@ export default function Details() {
 
       <Box width={"100%"}>
         <Grid spacing={4} direction={"column"}>
-          <Grid display={"flex"} gap={1}>
+          <Grid display={"flex"} gap={1}       justifyContent="space-between">
             <Button style={{ color: "black" }} onClick={handleNavigate}>
-              <PriviousIcon />
+              <KeyboardBackspaceIcon />
               {t("backhomebtn")}
             </Button>
+            <LocalSwitcher />
           </Grid>
 
           <Box sx={{ mt: 4 }}>

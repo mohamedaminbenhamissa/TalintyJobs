@@ -1,11 +1,9 @@
 "use client";
 import { useRef, useState, MouseEvent, type FC } from "react";
 import PropTypes from "prop-types";
-import ArrowRightIcon from "@untitled-ui/icons-react/build/esm/ArrowRight";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import SvgIcon from "@mui/material/SvgIcon";
@@ -17,11 +15,13 @@ import Image from "next/image";
 import JobIcon from "../../public/assets/JobIcon";
 import LocatioIcon from "../../public/assets/LocatioIcon";
 import MoneyIcon from "../../public/assets/MoneyIcon";
-import Link from "next/link";
-import { IconButton } from "@mui/material";
 import SendMail from "./sendMail";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
+import { styled } from "@mui/system";
+
+import { Share } from "./shareModal";
+import ShareIcon from "@mui/icons-material/Share";
 
 interface OverviewDoneTasksProps {
   icon: string;
@@ -33,6 +33,15 @@ interface OverviewDoneTasksProps {
   jobType: string;
 }
 
+const Paragraph = styled("p")({
+  display: "-webkit-box",
+  WebkitBoxOrient: "vertical",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  WebkitLineClamp: 2,
+  maxHeight: "3em",
+});
+
 export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
   icon,
   title,
@@ -43,10 +52,12 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
   experienceLevel,
 }) => {
   const [showMail, setShowMail] = useState(false);
+  const [showShare, setShowShare] = useState(false);
   const router = useRouter();
   const bookMarkRef = useRef<HTMLButtonElement>(null);
   const handleClose = () => {
     setShowMail(false);
+    setShowShare(false);
   };
   const locale = useLocale();
 
@@ -67,7 +78,7 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
   const t = useTranslations("Home");
   return (
     <>
-      <div onClick={handleNavigate}>
+      <div>
         <Card
           sx={{
             backgroundColor: "white",
@@ -77,92 +88,170 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
           }}
         >
           <Stack spacing={2} direction="column">
-            <Stack spacing={5} direction="row">
-              <Image src={icon} alt="icon" width={60} height={60} />
+            <Box onClick={handleNavigate}>
+              <Stack spacing={5} direction={{ xs: "column", md: "row" }}>
+                <Image src={icon} alt="icon" width={60} height={60} />
 
-              <Box flex={1}>
-                <Box display="flex" justifyContent="space-between">
-                  <Typography
-                    color="text.secondary"
-                    variant="subtitle1"
-                    fontWeight="bold"
-                    fontSize={26}
-                  >
-                    {title}
-                  </Typography>
-
-                  <IconButton
-                    ref={bookMarkRef}
-                    onClick={() => handleBookmark()}
-                    sx={{ zIndex: 2 }}
-                  >
-                    <BookmarkBorderIcon />
-                  </IconButton>
-                </Box>
-                <Box position="relative">
-                  {showMail && (
-                    <Box
-                      position="fixed"
-                      top={0}
-                      left={0}
-                      width="100%"
-                      height="100%"
-                      zIndex={999}
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
+                <Box flex={1}>
+                  <Box display="flex" justifyContent="space-between">
+                    <Typography
+                      color="text.secondary"
+                      variant="subtitle1"
+                      fontWeight="bold"
+                      fontSize={26}
                     >
-                      <SendMail onClose={handleClose} visible={showMail} />
+                      {title}
+                    </Typography>
+                    <Box>
+                      <Button
+                        ref={bookMarkRef}
+                        onClick={() => handleBookmark()}
+                        sx={{
+                          bgcolor: "#fff",
+                          pt: 2,
+                          pb: 2,
+                          pl: 2,
+                          pr: 2,
+                          color: "#000",
+                          "&:hover": {
+                            bgcolor: "#F3CB05",
+                            color: "#fff",
+                          },
+                        }}
+                      >
+                        <BookmarkBorderIcon />
+                      </Button>
+                      <Button
+                        sx={{
+                          bgcolor: "#fff",
+                          pt: 1,
+                          pb: 1,
+                          pl: 1,
+                          pr: 1,
+                          color: "#000",
+                          "&:hover": {
+                            bgcolor: "#F3CB05",
+                            color: "#fff",
+                          },
+                        }}
+                        onClick={() => setShowShare(true)}
+                      >
+                        <ShareIcon />
+                      </Button>
                     </Box>
-                  )}
+                  </Box>
+                  <Box position="relative">
+                    {showMail && (
+                      <Box
+                        position="fixed"
+                        top={0}
+                        left={0}
+                        width="100%"
+                        height="100%"
+                        zIndex={999}
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                      >
+                        <SendMail onClose={handleClose} visible={showMail} />
+                      </Box>
+                    )}
+                  </Box>
+                  <Box
+                    display="flex"
+                    gap={3}
+                    flexDirection={{ xs: "column", sm: "row" }}
+                    flexWrap="wrap"
+                  >
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <SvgIcon>
+                        <RecentActorsOutlinedIcon sx={{ color: "#F3CB05" }} />
+                      </SvgIcon>
+                      <Typography color="text.secondary" variant="body2">
+                        {categories}
+                      </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <SvgIcon>
+                        <JobIcon />
+                      </SvgIcon>
+                      <Typography color="text.secondary" variant="body2">
+                        {jobType}
+                      </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <SvgIcon>
+                        <LocatioIcon />
+                      </SvgIcon>
+                      <Typography color="text.secondary" variant="body2">
+                        {location}
+                      </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <SvgIcon>
+                        <MoneyIcon />
+                      </SvgIcon>
+                      <Typography color="text.secondary" variant="body2">
+                        {salary}
+                      </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <SvgIcon>
+                        <WorkHistoryOutlinedIcon sx={{ color: "#F3CB05" }} />
+                      </SvgIcon>
+                      <Typography color="text.secondary" variant="body2">
+                        {experienceLevel}
+                      </Typography>
+                    </Box>
+                  </Box>
                 </Box>
-                <Box display="flex" gap={3}>
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <SvgIcon>
-                      <RecentActorsOutlinedIcon sx={{ color: "#F3CB05" }} />
-                    </SvgIcon>
-                    <Typography color="text.secondary" variant="body2">
-                      {categories}
-                    </Typography>
-                  </Box>
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <SvgIcon>
-                      <JobIcon />
-                    </SvgIcon>
-                    <Typography color="text.secondary" variant="body2">
-                      {jobType}
-                    </Typography>
-                  </Box>
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <SvgIcon>
-                      <LocatioIcon />
-                    </SvgIcon>
-                    <Typography color="text.secondary" variant="body2">
-                      {location}
-                    </Typography>
-                  </Box>
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <SvgIcon>
-                      <MoneyIcon />
-                    </SvgIcon>
-                    <Typography color="text.secondary" variant="body2">
-                      {salary}
-                    </Typography>
-                  </Box>
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <SvgIcon>
-                      <WorkHistoryOutlinedIcon sx={{ color: "#F3CB05" }} />
-                    </SvgIcon>
-                    <Typography color="text.secondary" variant="body2">
-                      {experienceLevel}
-                    </Typography>
-                  </Box>
-                </Box>
-              </Box>
 
-              <Divider />
+                <Divider sx={{ my: 2 }} />
+              </Stack>
+              <Box>
+                <Paragraph>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Maxime mollitia, molestiae quas vel sint commodi repudiandae
+                  consequuntur voluptatum laborum numquam blanditiis harum
+                  quisquam eius sed odit fugiat iusto fuga praesentium optio,
+                  eaque rerum! Provident similique accusantium nemo autem.
+                  Veritatis obcaecati tenetur iure eius earum ut molestias
+                  architecto voluptate aliquam nihil, eveniet aliquid culpa
+                  officia aut! Impedit sit sunt quaerat, odit, tenetur error,
+                  harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
+                  quia. Quo neque error repudiandae fuga? Ipsa laudantium
+                  molestias eos sapiente officiis modi at sunt excepturi
+                  expedita sint? Sed quibusdam recusandae alias error harum
+                  maxime adipisci amet laborum. Perspiciatis minima nesciunt
+                  dolorem! Officiis iure rerum voluptates a cumque velit
+                  quibusdam sed amet tempora. Sit laborum ab, eius fugit
+                  doloribus tenetur fugiat, temporibus enim commodi iusto libero
+                  magni deleniti quod quam consequuntur! Commodi minima
+                  excepturi repudiandae velit hic maxime doloremque. Quaerat
+                  provident commodi consectetur veniam similique ad
+                </Paragraph>
+              </Box>
+            </Box>
+
+            <Stack display={"flex"} alignItems={"flex-end"}>
+              <Box position="relative">
+                {showShare && (
+                  <Box
+                    position="fixed"
+                    top={0}
+                    left={0}
+                    width="100%"
+                    height="100%"
+                    zIndex={999}
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Share onClose={handleClose} isOpen={showShare} />
+                  </Box>
+                )}
+              </Box>
             </Stack>
-            <Box>ss</Box>
           </Stack>
         </Card>
       </div>
