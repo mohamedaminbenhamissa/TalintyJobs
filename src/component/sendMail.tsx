@@ -1,4 +1,3 @@
-"use client";
 import {
   Box,
   Button,
@@ -10,6 +9,7 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 interface MailProps {
   visible: boolean;
@@ -20,6 +20,7 @@ const SendMail: React.FC<MailProps> = ({ visible, onClose }) => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const t = useTranslations("details");
 
   const validateEmail = (email: string) => {
@@ -40,8 +41,21 @@ const SendMail: React.FC<MailProps> = ({ visible, onClose }) => {
     }
   }, [email, t]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (isEmailValid) {
+      setSubmitting(true);
+      try {
+        const response = await axios.post("/api/sendMail", { email });
+        console.log("Email sent successfully:", response.data);
+
+        alert("Email sent successfully!");
+      } catch (error) {
+        console.error("Error sending email:", error);
+
+        alert("Failed to send email. Please try again later.");
+      } finally {
+        setSubmitting(false);
+      }
     } else {
       setEmailError(t("emailerror2"));
     }
@@ -96,10 +110,10 @@ const SendMail: React.FC<MailProps> = ({ visible, onClose }) => {
               fullWidth
               variant="contained"
               color="success"
-              disabled={!isEmailValid}
+              disabled={!isEmailValid || submitting}
               onClick={handleSubmit}
             >
-              {t("send")}
+              {submitting ? t("sending") : t("send")}
             </Button>
           </Stack>
         </Box>

@@ -13,7 +13,6 @@ import Image from "next/image";
 import JobIcon from "../../public/assets/JobIcon";
 import LocatioIcon from "../../public/assets/LocatioIcon";
 import MoneyIcon from "../../public/assets/MoneyIcon";
-import { IconButton } from "@mui/material";
 import ApplyForm from "./applyform";
 import SendMail from "./sendMail";
 import { useTranslations } from "next-intl";
@@ -222,7 +221,7 @@ export const JobDetails: FC<JobDetailsProps> = ({
                 fontSize={12}
                 sx={{ xs: "center", md: "right", fontWeight: "bolder" }}
               >
-                15/05/2024
+                {expireDate}{" "}
               </Typography>
             </Stack>
           </Stack>
