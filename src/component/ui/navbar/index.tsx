@@ -1,29 +1,19 @@
 "use client";
-import type { FC } from "react";
-import React from "react";
-
-import Box from "@mui/material/Box";
+import React, { useState, useEffect, FC } from "react";
+import { Box, Grid, Stack, Typography } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
-
 import Drawer from "@mui/material/Drawer";
-import Stack from "@mui/material/Stack";
+import InputAdornment from "@mui/material/InputAdornment";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import TextField from "@mui/material/TextField";
 import SvgIcon from "@mui/material/SvgIcon";
-import Typography from "@mui/material/Typography";
-
 import SearchMdIcon from "@untitled-ui/icons-react/build/esm/SearchMd";
-
-import type { NavColor } from "@/types/settings";
-
-import {
-  Autocomplete,
-  InputAdornment,
-  OutlinedInput,
-  TextField,
-} from "@mui/material";
-
 import { Logo } from "@/component/logo";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
+import axios from "axios";
+import type { NavColor } from "@/types/settings";
 
 const SIDE_NAV_WIDTH = 280;
 
@@ -35,43 +25,6 @@ type Option = {
   text: string;
   value: string;
 };
-
-const categorys: Option[] = [
-  { text: "Accounting / Finance", value: "JE" },
-  { text: "Automative Jobs", value: "JO" },
-  { text: "Customer", value: "KZ" },
-  { text: "Design", value: "KE" },
-  { text: "Development", value: "KP" },
-  { text: "Health and Care", value: "KR" },
-  { text: "Human Resource", value: "KW" },
-  { text: "Marketing", value: "KG" },
-  { text: "Project Managment", value: "LA" },
-];
-
-type typeOption = {
-  text: string;
-  value: string;
-};
-
-const typesOpt: typeOption[] = [
-  { text: "Internship", value: "JE" },
-  { text: "CDI", value: "JO" },
-  { text: "CDD", value: "KZ" },
-];
-
-type SwitchOptions = {
-  text: string;
-  value: string;
-};
-
-const switches: SwitchOptions[] = [
-  { text: "Fresh", value: "ferash" },
-  { text: "1 Year", value: "1year" },
-  { text: "2 Years", value: "2years" },
-  { text: "3 Years", value: "3years" },
-  { text: "4 Years", value: "4years" },
-  { text: "> 5 Years", value: "5years" },
-];
 type remoteTypeOption = {
   text: string;
   value: string;
@@ -88,8 +41,39 @@ export const SideNav: FC<SideNavProps> = () => {
     { text: t("fullRemote"), value: "fullRemote" },
   ];
 
+  const [typesOpt, setTypesOpt] = useState<Option[]>([]);
+  const [departments, setDepartments] = useState<Option[]>([]);
+  const [minExperience, setMinExperience] = useState<Option[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const typesResponse = await axios.get(
+          "https://api.talinty.com/api/v1/types"
+        );
+
+        const departmentsResponse = await axios.get(
+          "https://api.talinty.com/api/v1/departments"
+        );
+        const minExperienceResponse = await axios.get(
+          "https://api.talinty.com/api/v1/minExperience"
+        );
+
+        setTypesOpt(typesResponse.data);
+
+        setDepartments(departmentsResponse.data);
+        setMinExperience(minExperienceResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const linksList = [`/${locale}/details`];
-  if (linksList.includes(pathname)) return;
+  if (linksList.includes(pathname)) return null;
+
   return (
     <Drawer
       anchor="left"
@@ -168,7 +152,7 @@ export const SideNav: FC<SideNavProps> = () => {
               <Typography variant="subtitle2">{t("department")}</Typography>
               <Autocomplete
                 getOptionLabel={(option: Option) => option.text}
-                options={categorys}
+                options={departments}
                 renderInput={(params): JSX.Element => (
                   <TextField
                     {...params}
@@ -187,7 +171,7 @@ export const SideNav: FC<SideNavProps> = () => {
               </Typography>
               <Autocomplete
                 getOptionLabel={(option: Option) => option.text}
-                options={switches}
+                options={minExperience}
                 renderInput={(params): JSX.Element => (
                   <TextField
                     {...params}

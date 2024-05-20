@@ -36,7 +36,7 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
         setFileError("");
       }
     },
-    [t],
+    [t]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -132,7 +132,6 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
                   onChange={(e) => setFirstName(e.target.value)}
                   error={!!firstNameError}
                   helperText={firstNameError}
-                  InputProps={{ sx: { borderRadius: 4 } }}
                 />
                 <TextField
                   fullWidth
@@ -143,7 +142,6 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
                   onChange={(e) => setLastName(e.target.value)}
                   error={!!lastNameError}
                   helperText={lastNameError}
-                  InputProps={{ sx: { borderRadius: 4 } }}
                 />
                 <TextField
                   fullWidth
@@ -155,7 +153,6 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
                   onChange={(e) => setEmail(e.target.value)}
                   error={!!emailError}
                   helperText={emailError}
-                  InputProps={{ sx: { borderRadius: 4 } }}
                 />
                 <Box sx={{ marginTop: 2 }}>
                   <div {...getRootProps()}>
@@ -187,15 +184,15 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
                       fullWidth
                       variant="outlined"
                       onClick={onClose}
-                      sx={{ borderRadius: 4 }}
+                      color="error"
                     >
                       {t("cancel")}
                     </Button>
                     <Button
                       fullWidth
                       variant="outlined"
-                      sx={{ borderRadius: 4 }}
                       onClick={handleSubmit}
+                      color="success"
                     >
                       {t("send")}
                     </Button>
