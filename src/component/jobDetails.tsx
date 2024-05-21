@@ -27,6 +27,7 @@ interface JobDetailsProps {
   salary: string;
   experienceLevel: string;
   jobType: string;
+  expireDate: string;
 }
 
 export const JobDetails: FC<JobDetailsProps> = ({
@@ -37,6 +38,7 @@ export const JobDetails: FC<JobDetailsProps> = ({
   salary,
   jobType,
   experienceLevel,
+  expireDate,
 }) => {
   const [showform, setShowForm] = useState(false);
   const [showmail, setShowMail] = useState(false);
@@ -221,7 +223,7 @@ export const JobDetails: FC<JobDetailsProps> = ({
                 fontSize={12}
                 sx={{ xs: "center", md: "right", fontWeight: "bolder" }}
               >
-                {expireDate}{" "}
+                {expireDate}
               </Typography>
             </Stack>
           </Stack>

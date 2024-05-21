@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, FC } from "react";
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
@@ -25,6 +25,7 @@ type Option = {
   text: string;
   value: string;
 };
+
 type remoteTypeOption = {
   text: string;
   value: string;
@@ -36,7 +37,7 @@ export const SideNav: FC<SideNavProps> = () => {
   const locale = useLocale();
 
   const remotetypesOpt: remoteTypeOption[] = [
-    { text: t("noRemote"), value: "noRemote " },
+    { text: t("noRemote"), value: "noRemote" },
     { text: t("halfRemote"), value: "halfRemote" },
     { text: t("fullRemote"), value: "fullRemote" },
   ];
@@ -44,35 +45,45 @@ export const SideNav: FC<SideNavProps> = () => {
   const [typesOpt, setTypesOpt] = useState<Option[]>([]);
   const [departments, setDepartments] = useState<Option[]>([]);
   const [minExperience, setMinExperience] = useState<Option[]>([]);
+  const [selectedType, setSelectedType] = useState<string>("");
+  const [selectedRemoteType, setSelectedRemoteType] = useState<string>("");
+  const [selectedDepartment, setSelectedDepartment] = useState<string>("");
+  const [selectedExperience, setSelectedExperience] = useState<string>("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const typesResponse = await axios.get(
-          "https://api.talinty.com/api/v1/types"
-        );
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const typesResponse = await axios.get(
+  //         "https://api.talinty.com/api/v1/types"
+  //       );
 
-        const departmentsResponse = await axios.get(
-          "https://api.talinty.com/api/v1/departments"
-        );
-        const minExperienceResponse = await axios.get(
-          "https://api.talinty.com/api/v1/minExperience"
-        );
+  //       const departmentsResponse = await axios.get(
+  //         "https://api.talinty.com/api/v1/departments"
+  //       );
+  //       const minExperienceResponse = await axios.get(
+  //         "https://api.talinty.com/api/v1/minExperience"
+  //       );
 
-        setTypesOpt(typesResponse.data);
+  //       setTypesOpt(typesResponse.data);
+  //       setDepartments(departmentsResponse.data);
+  //       setMinExperience(minExperienceResponse.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-        setDepartments(departmentsResponse.data);
-        setMinExperience(minExperienceResponse.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  //   fetchData();
+  // }, []);
 
-    fetchData();
-  }, []);
-
-  const linksList = [`/${locale}/details`];
-  if (linksList.includes(pathname)) return null;
+  const handleSearch = () => {
+    // Perform search with selected filters
+    console.log("Searching with filters:", {
+      selectedType,
+      selectedRemoteType,
+      selectedDepartment,
+      selectedExperience,
+    });
+  };
 
   return (
     <Drawer
@@ -102,7 +113,6 @@ export const SideNav: FC<SideNavProps> = () => {
               <OutlinedInput
                 fullWidth
                 placeholder={t("search")}
-                sx={{ color: "#000" }}
                 startAdornment={
                   <InputAdornment position="start">
                     <SvgIcon>
@@ -117,12 +127,14 @@ export const SideNav: FC<SideNavProps> = () => {
               <Autocomplete
                 getOptionLabel={(option: Option) => option.text}
                 options={typesOpt}
-                renderInput={(params): JSX.Element => (
+                onChange={(event, value) =>
+                  setSelectedType(value ? value.value : "")
+                }
+                renderInput={(params) => (
                   <TextField
                     {...params}
                     variant="outlined"
                     fullWidth
-                    style={{ color: "#fff" }}
                     label={t("type")}
                     name="type"
                   />
@@ -135,12 +147,14 @@ export const SideNav: FC<SideNavProps> = () => {
               <Autocomplete
                 getOptionLabel={(option: Option) => option.text}
                 options={remotetypesOpt}
-                renderInput={(params): JSX.Element => (
+                onChange={(event, value) =>
+                  setSelectedRemoteType(value ? value.value : "")
+                }
+                renderInput={(params) => (
                   <TextField
                     {...params}
                     variant="outlined"
                     fullWidth
-                    style={{ color: "#fff" }}
                     label={t("remoteTypes")}
                     name="type"
                   />
@@ -153,12 +167,14 @@ export const SideNav: FC<SideNavProps> = () => {
               <Autocomplete
                 getOptionLabel={(option: Option) => option.text}
                 options={departments}
-                renderInput={(params): JSX.Element => (
+                onChange={(event, value) =>
+                  setSelectedDepartment(value ? value.value : "")
+                }
+                renderInput={(params) => (
                   <TextField
                     {...params}
                     variant="outlined"
                     fullWidth
-                    style={{ color: "#fff" }}
                     label={t("department")}
                     name="department"
                   />
@@ -172,12 +188,14 @@ export const SideNav: FC<SideNavProps> = () => {
               <Autocomplete
                 getOptionLabel={(option: Option) => option.text}
                 options={minExperience}
-                renderInput={(params): JSX.Element => (
+                onChange={(event, value) =>
+                  setSelectedExperience(value ? value.value : "")
+                }
+                renderInput={(params) => (
                   <TextField
                     {...params}
                     variant="outlined"
                     fullWidth
-                    style={{ color: "#fff" }}
                     label={t("experienceLevel")}
                     name="experienceLevel"
                   />
@@ -187,6 +205,7 @@ export const SideNav: FC<SideNavProps> = () => {
 
             <Stack spacing={1}>
               <Button
+                onClick={handleSearch}
                 sx={{
                   bgcolor: "#F3CB05",
                   color: "#fff",

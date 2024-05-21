@@ -26,7 +26,7 @@ import ShareIcon from "@mui/icons-material/Share";
 interface OverviewDoneTasksProps {
   icon: string;
   title: string;
-  categories: string;
+  department: string;
   location: string;
   salary: string;
   experienceLevel: string;
@@ -46,7 +46,7 @@ const Paragraph = styled("p")({
 export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
   icon,
   title,
-  categories,
+  department,
   location,
   salary,
   jobType,
@@ -170,7 +170,7 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
                         <RecentActorsOutlinedIcon sx={{ color: "#F3CB05" }} />
                       </SvgIcon>
                       <Typography color="text.secondary" variant="body2">
-                        {categories}
+                        {department}
                       </Typography>
                     </Box>
                     <Box display="flex" alignItems="center" gap={1}>
@@ -243,7 +243,7 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
 OverviewDoneTasks.propTypes = {
   icon: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  categories: PropTypes.string.isRequired,
+  department: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
   salary: PropTypes.string.isRequired,
   jobType: PropTypes.string.isRequired,

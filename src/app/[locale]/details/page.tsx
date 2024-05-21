@@ -1,40 +1,44 @@
-"use client";
 import JobBody from "@/component/jobBody";
 import { JobDetails } from "@/component/jobDetails";
 import JobOverview from "@/component/jobOverview";
 
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
-import PriviousIcon from "../../../../public/assets/priviousIcon";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import Link from "next/link";
-import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import LocalSwitcher from "@/component/localSwitcher";
-import { useEffect, useState } from "react";
 
-export default function Details() {
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+
+import { useLocale, useTranslations } from "next-intl";
+import { redirect } from "next/navigation";
+import LocalSwitcher from "@/component/localSwitcher";
+
+type job = {
+  _id: string;
+  image: string;
+  name: string;
+  department: string;
+  salary: string;
+  experienceLevel: string;
+  type: string;
+  description: string;
+  minExperience: string;
+  location: string;
+  expireDate: string;
+};
+async function getData() {
+  const res = await fetch("https://api.talinty.com/api/v1/jobs");
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data sorry");
+  }
+
+  return res.json();
+}
+export default async function Details() {
   const t = useTranslations("details");
   const locale = useLocale();
-
-  const router = useRouter();
+  const jobs = await getData();
   const handleNavigate = () => {
-    router.push(`/${locale}`);
+    redirect(`/${locale}`);
   };
-
-  const [jobs, setJobs] = useState([]);
-
-  useEffect(() => {
-    async function fetchJobs() {
-      try {
-        const response = await axios.get("https://api.talinty.com/api/v1/jobs");
-        setJobs(response.data);
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-      }
-    }
-
-    fetchJobs();
-  }, []);
 
   return (
     <main className="flex min-h-screen w-full flex-col items-start justify-between ">
@@ -51,7 +55,7 @@ export default function Details() {
           </Grid>
 
           <Box sx={{ mt: 4 }}>
-            {jobs.map((job) => (
+            {jobs.map((job: job) => (
               <Box key={job._id}>
                 <JobDetails
                   icon={job.image}
@@ -61,6 +65,7 @@ export default function Details() {
                   salary={job.salary || "Not available"}
                   jobType={job.type || "Not available"}
                   experienceLevel={job.minExperience || "Not available"}
+                  expireDate={job.expireDate || "Not available"}
                 />
               </Box>
             ))}
