@@ -1,26 +1,81 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
+
 import { Box, Grid, Stack, Typography } from "@mui/material";
 
 import LocalSwitcher from "@/component/localSwitcher";
-import { OverviewDoneTasks } from "@/component/overview-done-tasks";
+import axiosInstance from "@/app/_utlis/axios";
 
-export default function Home() {
-  const [jobs, setJobs] = useState([]);
+type job = {
+  _id: string;
+  image: string;
+  name: string;
+  department: string;
+  salary: string;
+  experienceLevel: string;
+  type: string;
+  description: string;
+  minExperience: string;
+  location: string;
+};
 
-  useEffect(() => {
-    async function fetchJobs() {
-      try {
-        const response = await axios.get("https://api.talinty.com/api/v1/jobs");
-        setJobs(response.data);
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-      }
-    }
+const getJobs = async () => {
+  const payload = {
+    params: {
+      active: true,
+    },
+    fields: ["name", "remote", "location", "type", "expire", "_id"],
+  };
+  return new Promise((resolve, reject) => {
+    axiosInstance
+      .get("/api/v1/job/admin", { params: { payload } })
+      .then((jobs) => {
+        console.log("🚀 ~ .then ~ jbs:", jobs);
 
-    fetchJobs();
-  }, []);
+        resolve(jobs.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+// const fetchJobs = async () => {
+//   try {
+//     const payload = {
+//       params: {
+//         active: true,
+//       },
+//       fields: ["name", "remote", "location", "type", "expire", "_id"],
+//     };
+
+//     // const queryString = new URLSearchParams({
+//     //   payload: JSON.stringify(payload),
+//     // }).toString();
+
+//     const url = `api/v1/job/admin/`;
+
+//     const response = await axiosInstance.get(url, { params: { payload } });
+//     console.log("🚀 ~ fetchJobs ~ response:", response);
+
+//     const data = response.data;
+
+//     return Array.isArray(data) ? data : [];
+//   } catch (error) {
+//     // console.error("Fetch error:", error);
+//     return [];
+//   }
+// };
+
+// fetchJobs().then((data) => {
+//   // console.log(data);
+// });
+
+export default async function Home() {
+  console.log("🚀 ~ Home ~ Home:");
+
+  const jobs = await getJobs();
+
+  // console.log(jobs);
 
   return (
     <main className="flex min-h-screen w-full flex-col items-start justify-between">
@@ -39,14 +94,14 @@ export default function Home() {
             </Stack>
           </Stack>
 
-          <Box width={"100%"}>
+          {/* <Box width={"100%"}>
             <Grid container spacing={4}>
-              {jobs.map((job) => (
+              {jobs.map((job: job) => (
                 <Grid item xs={12} md={6} lg={4} key={job._id}>
                   <OverviewDoneTasks
                     icon={job.image}
                     title={job.name || "Not available"}
-                    categories={job.department || "Not available"}
+                    department={job.department || "Not available"}
                     location={job.location || "Not available"}
                     salary={job.salary || "Not available"}
                     jobType={job.type || "Not available"}
@@ -56,7 +111,7 @@ export default function Home() {
                 </Grid>
               ))}
             </Grid>
-          </Box>
+          </Box> */}
         </Grid>
       </Box>
     </main>

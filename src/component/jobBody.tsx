@@ -3,28 +3,24 @@ import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-interface Job {
+type job = {
+  _id: string;
   description: string;
+};
+async function getData() {
+  const res = await fetch("https://api.talinty.com/api/v1/jobs");
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data sorry");
+  }
+
+  return res.json();
 }
 
-const JobBody = () => {
+export default async function JobBody() {
   const t = useTranslations("details");
-  const [description, setDescription] = useState<string>("");
 
-  useEffect(() => {
-    const fetchJobDescription = async () => {
-      try {
-        const response = await axios.get<Job>(
-          "https://api.talinty.com/api/v1/jobs"
-        );
-        setDescription(response.data.description);
-      } catch (error) {
-        console.error("Error fetching job description:", error);
-      }
-    };
-
-    fetchJobDescription();
-  }, []);
+  const jobs = await getData();
 
   return (
     <Box sx={{ p: 2, maxWidth: 1000 }}>
@@ -39,10 +35,13 @@ const JobBody = () => {
         >
           {t("jobDescription")}
         </Typography>
-        <Box dangerouslySetInnerHTML={{ __html: description }} />
+        {jobs.map((job: job) => (
+          <Box
+            key={job._id}
+            dangerouslySetInnerHTML={{ __html: job.description }}
+          />
+        ))}
       </Box>
     </Box>
   );
-};
-
-export default JobBody;
+}
