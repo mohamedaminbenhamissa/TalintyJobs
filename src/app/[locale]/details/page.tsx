@@ -9,6 +9,40 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { useLocale, useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
 import LocalSwitcher from "@/component/localSwitcher";
+import axios from "axios";
+
+
+const getJobs = async () => {
+  const payload = {
+    params: {
+      active: true,
+    },
+    fields: [
+     
+      "name",
+      "slug",
+      "description",
+      "remote",
+      "location",
+      "minExperience",
+      "department",
+      "type",
+      "expire",
+      "_id",
+    ].join(","),
+  };
+
+  try {
+    const response = await axios.get("http://localhost:5002/api/v1/job/", {
+      params: { payload: payload },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    throw error;
+  }
+};
+
 
 type job = {
   _id: string;
@@ -23,19 +57,11 @@ type job = {
   location: string;
   expireDate: string;
 };
-async function getData() {
-  const res = await fetch("https://api.talinty.com/api/v1/jobs");
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch data sorry");
-  }
-
-  return res.json();
-}
 export default async function Details() {
   const t = useTranslations("details");
   const locale = useLocale();
-  const jobs = await getData();
+  const jobs = await getJobs();
   const handleNavigate = () => {
     redirect(`/${locale}`);
   };
@@ -54,9 +80,10 @@ export default async function Details() {
             <LocalSwitcher />
           </Grid>
 
-          <Box sx={{ mt: 4 }}>
-            {jobs.map((job: job) => (
-              <Box key={job._id}>
+          <Box width={"100%"}>
+            <Grid container spacing={3}>
+              {jobs?.map((job) => (
+                <Grid width={"100%"} item key={job._id}>
                 <JobDetails
                   icon={job.image}
                   title={job.name || "Not available"}
@@ -67,8 +94,10 @@ export default async function Details() {
                   experienceLevel={job.minExperience || "Not available"}
                   expireDate={job.expireDate || "Not available"}
                 />
-              </Box>
-            ))}
+                   </Grid>
+              ))}
+            </Grid>
+            
           </Box>
           <Stack
             direction={"row"}
