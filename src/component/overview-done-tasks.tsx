@@ -22,6 +22,17 @@ import { styled } from "@mui/system";
 
 import { Share } from "./shareModal";
 import ShareIcon from "@mui/icons-material/Share";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+
+const HtmlToPlainText = ({ html }) => {
+  const dummyElement = document.createElement("div");
+  dummyElement.innerHTML = html;
+  const plainText = dummyElement.innerText;
+
+  return <p>{plainText}</p>;
+};
+
+export default HtmlToPlainText;
 
 interface OverviewDoneTasksProps {
   icon: string;
@@ -32,6 +43,7 @@ interface OverviewDoneTasksProps {
   experienceLevel: string;
   jobType: string;
   description: string;
+  remote: string;
 }
 
 const Paragraph = styled("p")({
@@ -52,6 +64,7 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
   jobType,
   experienceLevel,
   description,
+  remote,
 }) => {
   const [showMail, setShowMail] = useState(false);
   const [showShare, setShowShare] = useState(false);
@@ -205,10 +218,20 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
                         {experienceLevel}
                       </Typography>
                     </Box>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <SvgIcon>
+                        <AccessTimeIcon sx={{ color: "#F3CB05" }} />
+                      </SvgIcon>
+                      <Typography color="text.secondary" variant="body2">
+                        {remote}
+                      </Typography>
+                    </Box>
                   </Box>
                   <Divider sx={{ my: 2 }} />
                   <Box>
-                    <Paragraph>{description}</Paragraph>
+                    <Paragraph>
+                      <HtmlToPlainText html={description} />
+                    </Paragraph>
                   </Box>
                 </Box>
               </Stack>

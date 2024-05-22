@@ -11,7 +11,8 @@
     "noRemote": "No Remote",
     "halfRemote": "Half Remote",
     "fullRemote": "Full Remote",
-    "Share": "Share this opportunity "
+    "Share": "Share this opportunity ",
+    "LatestJobs" : "Latest Jobs"
   },
   "details": {
     "backhomebtn": "Back To Home",

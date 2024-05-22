@@ -3,79 +3,46 @@ import React from "react";
 import { Box, Grid, Stack, Typography } from "@mui/material";
 
 import LocalSwitcher from "@/component/localSwitcher";
-import axiosInstance from "@/app/_utlis/axios";
-
-type job = {
-  _id: string;
-  image: string;
-  name: string;
-  department: string;
-  salary: string;
-  experienceLevel: string;
-  type: string;
-  description: string;
-  minExperience: string;
-  location: string;
-};
+import type { NextApiRequest, NextApiResponse } from "next";
+import axios from "axios";
+import { OverviewDoneTasks } from "@/component/overview-done-tasks";
+import JobIcon from "../../../public/assets/JobIcon";
 
 const getJobs = async () => {
   const payload = {
     params: {
       active: true,
     },
-    fields: ["name", "remote", "location", "type", "expire", "_id"],
+    fields: [
+      "name",
+      "slug",
+      "description",
+      "remote",
+      "location",
+      "minExperience",
+      "department",
+      "type",
+      "expire",
+      "_id",
+    ].join(","),
   };
-  return new Promise((resolve, reject) => {
-    axiosInstance
-      .get("/api/v1/job/admin", { params: { payload } })
-      .then((jobs) => {
-        console.log("🚀 ~ .then ~ jbs:", jobs);
 
-        resolve(jobs.data);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+  try {
+    const response = await axios.get("http://localhost:5002/api/v1/job/", {
+      params: { payload: payload },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    throw error;
+  }
 };
-
-// const fetchJobs = async () => {
-//   try {
-//     const payload = {
-//       params: {
-//         active: true,
-//       },
-//       fields: ["name", "remote", "location", "type", "expire", "_id"],
-//     };
-
-//     // const queryString = new URLSearchParams({
-//     //   payload: JSON.stringify(payload),
-//     // }).toString();
-
-//     const url = `api/v1/job/admin/`;
-
-//     const response = await axiosInstance.get(url, { params: { payload } });
-//     console.log("🚀 ~ fetchJobs ~ response:", response);
-
-//     const data = response.data;
-
-//     return Array.isArray(data) ? data : [];
-//   } catch (error) {
-//     // console.error("Fetch error:", error);
-//     return [];
-//   }
-// };
-
-// fetchJobs().then((data) => {
-//   // console.log(data);
-// });
 
 export default async function Home() {
   console.log("🚀 ~ Home ~ Home:");
 
-  const jobs = await getJobs();
-
-  // console.log(jobs);
+  const { jobs } = await getJobs();
+  console.log("🚀 ~ Home ~ jobs:", jobs);
 
   return (
     <main className="flex min-h-screen w-full flex-col items-start justify-between">
@@ -88,30 +55,31 @@ export default async function Home() {
             display={"flex"}
             justifyContent="space-between"
           >
-            <Typography variant="h5">Latest Jobs</Typography>
+            <Typography variant="h5"> Latest Jobs</Typography>
             <Stack direction="row" spacing={4}>
               <LocalSwitcher />
             </Stack>
           </Stack>
 
-          {/* <Box width={"100%"}>
-            <Grid container spacing={4}>
-              {jobs.map((job: job) => (
-                <Grid item xs={12} md={6} lg={4} key={job._id}>
+          <Box width={"100%"}>
+            <Grid container spacing={3}>
+              {jobs?.map((job) => (
+                <Grid width={"100%"} item key={job._id}>
                   <OverviewDoneTasks
-                    icon={job.image}
+                    icon={job.image || <JobIcon />}
                     title={job.name || "Not available"}
                     department={job.department || "Not available"}
                     location={job.location || "Not available"}
                     salary={job.salary || "Not available"}
                     jobType={job.type || "Not available"}
+                    remote={job.remote || "Not available"}
                     experienceLevel={job.minExperience || "Not available"}
                     description={job.description || "Not available"}
                   />
                 </Grid>
               ))}
             </Grid>
-          </Box> */}
+          </Box>
         </Grid>
       </Box>
     </main>
