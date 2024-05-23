@@ -15,9 +15,10 @@ type Job = {
   location?: string;
   minExperience?: string;
   salary?: string;
-  image?: string
+  image?: string;
   type?: string;
   _id?: string;
+  slug?: string;
 };
 
 const getJobs = async () => {
@@ -36,6 +37,7 @@ const getJobs = async () => {
       "type",
       "expire",
       "_id",
+      "slug",
     ].join(","),
   };
 
@@ -87,6 +89,7 @@ export default async function Home() {
                     remote={job?.remote || "Not available"}
                     experienceLevel={job?.minExperience || "Not available"}
                     description={job?.description || "Not available"}
+                    slug={job?.slug || "not"}
                   />
                 </Grid>
               ))}

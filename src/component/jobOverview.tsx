@@ -14,6 +14,7 @@ import LocatioIcon from "../../public/assets/LocatioIcon";
 import MoneyIcon from "../../public/assets/MoneyIcon";
 import CalanderIcon from "../../public/assets/calenderIcon";
 import ExpirationIcon from "../../public/assets/expirationIcon";
+import { useTranslations } from "next-intl";
 
 
 interface JobOverviewProps {
@@ -27,15 +28,13 @@ interface JobOverviewProps {
 }
 
 export const JobOverview: FC<JobOverviewProps> = ({
-  // const t = useTranslations("details");
   created,
-
   location,
   salary,
-
   expire,
   minExperience,
 }) => {
+  const t = useTranslations("details");
   return (
     <Card
       elevation={0}
@@ -65,7 +64,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
                   }}
                   variant="subtitle2"
                 >
-                  {/* {t("JobPosted")} */} Job Posted
+                  {t("JobPosted")} 
                 </Typography>
               }
               secondary={
@@ -101,7 +100,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
                   }}
                   variant="subtitle2"
                 >
-                  {/* {t("location")} */} Location
+                  {t("location")} 
                 </Typography>
               }
               secondary={
@@ -137,7 +136,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
                   }}
                   variant="subtitle2"
                 >
-                  {/* {t("offeredSalary")} */}Offred Salary
+       {t("offeredSalary")} 
                 </Typography>
               }
               secondary={
@@ -173,7 +172,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
                   }}
                   variant="subtitle2"
                 >
-                  {/* {t("expirationDate")} */}Expiration Date
+                  {t("expirationDate")}
                 </Typography>
               }
               secondary={
@@ -209,7 +208,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
                   }}
                   variant="subtitle2"
                 >
-                  {/* {t("experience")} */}experience
+                  {t("experience")}
                 </Typography>
               }
               secondary={

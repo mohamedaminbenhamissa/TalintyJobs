@@ -16,23 +16,17 @@ import JobIcon from "../../public/assets/JobIcon";
 import LocatioIcon from "../../public/assets/LocatioIcon";
 import MoneyIcon from "../../public/assets/MoneyIcon";
 import SendMail from "./sendMail";
-import { useRouter } from "next/navigation";
+
 import { useLocale, useTranslations } from "next-intl";
 import { styled } from "@mui/system";
 
 import { Share } from "./shareModal";
 import ShareIcon from "@mui/icons-material/Share";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import parse from "html-react-parser"
+import { useRouter } from "@/navigation";
 
-// const HtmlToPlainText = ({ html }) => {
-//   const dummyElement = document.createElement("div");
-//   dummyElement.innerHTML = html;
-//   const plainText = dummyElement.innerText;
 
-//   return <p>{plainText}</p>;
-// };
-
-// export default HtmlToPlainText;
 
 interface OverviewDoneTasksProps {
   icon: string;
@@ -44,9 +38,10 @@ interface OverviewDoneTasksProps {
   jobType: string;
   description: string;
   remote: string;
+  slug:string;
 }
 
-const Paragraph = styled("p")({
+const Paragraph = styled("div")({
   display: "-webkit-box",
   WebkitBoxOrient: "vertical",
   overflow: "hidden",
@@ -65,6 +60,7 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
   experienceLevel,
   description,
   remote,
+  slug
 }) => {
   const [showMail, setShowMail] = useState(false);
   const [showShare, setShowShare] = useState(false);
@@ -84,7 +80,8 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
       event.stopPropagation();
       return;
     }
-    router.push(`/${locale}/jobs`);
+    router.push(`/jobs/${slug}`);
+
   };
   const handleBookmark = () => {
     setShowMail(true);
@@ -226,11 +223,19 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
                         {remote}
                       </Typography>
                     </Box>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <SvgIcon>
+                        <AccessTimeIcon sx={{ color: "#F3CB05" }} />
+                      </SvgIcon>
+                      <Typography color="text.secondary" variant="body2">
+                        {slug}
+                      </Typography>
+                    </Box>
                   </Box>
                   <Divider sx={{ my: 2 }} />
                   <Box>
                     <Paragraph>
-                     {description} 
+                     {parse(description)}
                     </Paragraph>
                   </Box>
                 </Box>
@@ -272,4 +277,5 @@ OverviewDoneTasks.propTypes = {
   jobType: PropTypes.string.isRequired,
   experienceLevel: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
 };
