@@ -2,7 +2,7 @@
 
 import React, { useTransition } from "react";
 
-import { useRouter } from "next/navigation";
+
 import { useLocale } from "next-intl";
 import {
   FormControl,
@@ -12,15 +12,18 @@ import {
 } from "@mui/material";
 import EnglishIcon from "../../public/assets/englishIcon";
 import ArabIcon from "../../public/assets/arabIcon";
+import { usePathname, useRouter } from "@/navigation";
 export default function LocalSwitcher() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const localActive = useLocale();
+ const pathname =usePathname();
+
   const onSelectChange = (e: SelectChangeEvent) => {
     const nextLocale = e.target.value;
 
     startTransition(() => {
-      router.replace(`/${nextLocale}`);
+      router.replace(pathname,{locale:nextLocale});
     });
   };
   return (
