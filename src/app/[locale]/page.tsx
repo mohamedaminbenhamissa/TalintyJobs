@@ -3,10 +3,22 @@ import React from "react";
 import { Box, Grid, Stack, Typography } from "@mui/material";
 
 import LocalSwitcher from "@/component/localSwitcher";
-import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import { OverviewDoneTasks } from "@/component/overview-done-tasks";
-import JobIcon from "../../../public/assets/JobIcon";
+import parse from "html-react-parser";
+
+type Job = {
+  department?: string;
+  name?: string;
+  description?: string;
+  remote?: string;
+  location?: string;
+  minExperience?: string;
+  salary?: string;
+  image?: string
+  type?: string;
+  _id?: string;
+};
 
 const getJobs = async () => {
   const payload = {
@@ -63,18 +75,18 @@ export default async function Home() {
 
           <Box width={"100%"}>
             <Grid container spacing={3}>
-              {jobs?.map((job) => (
-                <Grid width={"100%"} item key={job._id}>
+              {jobs?.map((job: Job) => (
+                <Grid width={"100%"} item key={job?._id}>
                   <OverviewDoneTasks
-                    icon={job.image || <JobIcon />}
-                    title={job.name || "Not available"}
-                    department={job.department || "Not available"}
-                    location={job.location || "Not available"}
-                    salary={job.salary || "Not available"}
-                    jobType={job.type || "Not available"}
-                    remote={job.remote || "Not available"}
-                    experienceLevel={job.minExperience || "Not available"}
-                    description={job.description || "Not available"}
+                    icon={`https://astrolab.co/wp-content/uploads/2023/10/astrolab-1.svg`}
+                    title={job?.name || "Not available"}
+                    department={job?.department || "Not available"}
+                    location={job?.location || "Not available"}
+                    salary={job?.salary || "Not available"}
+                    jobType={job?.type || "Not available"}
+                    remote={job?.remote || "Not available"}
+                    experienceLevel={job?.minExperience || "Not available"}
+                    description={job?.description || "Not available"}
                   />
                 </Grid>
               ))}

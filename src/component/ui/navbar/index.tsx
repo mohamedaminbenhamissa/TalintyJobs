@@ -31,12 +31,7 @@ type remoteTypeOption = {
   value: string;
 };
 
-
-
-
-
-export  function SideNav() {
-
+export function SideNav() {
   const pathname = usePathname();
   const t = useTranslations("Home");
   const locale = useLocale();
@@ -55,27 +50,6 @@ export  function SideNav() {
   const [selectedDepartment, setSelectedDepartment] = useState<string>("");
   const [selectedExperience, setSelectedExperience] = useState<string>("");
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const typesResponse = await axios.get(
-  //         "https://api.talinty.com/api/v1/types"
-  //       );
-  //       const departmentsResponse = await axios.get(
-  //         "https://api.talinty.com/api/v1/departments"
-  //       );
-  //       const minExperienceResponse = await axios.get(
-  //         "https://api.talinty.com/api/v1/minExperience"
-  //       );
-  //       setTypesOpt(typesResponse.data);
-  //       setDepartments(departmentsResponse.data);
-  //       setMinExperience(minExperienceResponse.data);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
   const handleSearch = () => {
     // Perform search with selected filters
     console.log("Searching with filters:", {
@@ -85,7 +59,7 @@ export  function SideNav() {
       selectedExperience,
     });
   };
-
+  if (pathname.startsWith(`/${locale}/jobs`)) return;
   return (
     <Drawer
       anchor="left"
@@ -114,26 +88,33 @@ export  function SideNav() {
               <OutlinedInput
                 fullWidth
                 placeholder={t("search")}
-                startAdornment={<InputAdornment position="start">
-                  <SvgIcon>
-                    <SearchMdIcon />
-                  </SvgIcon>
-                </InputAdornment>} />
+                startAdornment={
+                  <InputAdornment position="start">
+                    <SvgIcon>
+                      <SearchMdIcon />
+                    </SvgIcon>
+                  </InputAdornment>
+                }
+              />
             </Stack>
             <Stack spacing={1}>
               <Typography variant="subtitle2">{t("type")}</Typography>
               <Autocomplete
                 getOptionLabel={(option: Option) => option.text}
                 options={typesOpt}
-                onChange={(event, value) => setSelectedType(value ? value.value : "")}
+                onChange={(event, value) =>
+                  setSelectedType(value ? value.value : "")
+                }
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     variant="outlined"
                     fullWidth
                     label={t("type")}
-                    name="type" />
-                )} />
+                    name="type"
+                  />
+                )}
+              />
             </Stack>
 
             <Stack spacing={1}>
@@ -141,15 +122,19 @@ export  function SideNav() {
               <Autocomplete
                 getOptionLabel={(option: Option) => option.text}
                 options={remotetypesOpt}
-                onChange={(event, value) => setSelectedRemoteType(value ? value.value : "")}
+                onChange={(event, value) =>
+                  setSelectedRemoteType(value ? value.value : "")
+                }
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     variant="outlined"
                     fullWidth
                     label={t("remoteTypes")}
-                    name="type" />
-                )} />
+                    name="type"
+                  />
+                )}
+              />
             </Stack>
 
             <Stack spacing={1}>
@@ -157,15 +142,19 @@ export  function SideNav() {
               <Autocomplete
                 getOptionLabel={(option: Option) => option.text}
                 options={departments}
-                onChange={(event, value) => setSelectedDepartment(value ? value.value : "")}
+                onChange={(event, value) =>
+                  setSelectedDepartment(value ? value.value : "")
+                }
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     variant="outlined"
                     fullWidth
                     label={t("department")}
-                    name="department" />
-                )} />
+                    name="department"
+                  />
+                )}
+              />
             </Stack>
             <Stack spacing={1}>
               <Typography variant="subtitle2">
@@ -174,15 +163,19 @@ export  function SideNav() {
               <Autocomplete
                 getOptionLabel={(option: Option) => option.text}
                 options={minExperience}
-                onChange={(event, value) => setSelectedExperience(value ? value.value : "")}
+                onChange={(event, value) =>
+                  setSelectedExperience(value ? value.value : "")
+                }
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     variant="outlined"
                     fullWidth
                     label={t("experienceLevel")}
-                    name="experienceLevel" />
-                )} />
+                    name="experienceLevel"
+                  />
+                )}
+              />
             </Stack>
 
             <Stack spacing={1}>

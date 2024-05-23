@@ -24,15 +24,15 @@ import { Share } from "./shareModal";
 import ShareIcon from "@mui/icons-material/Share";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
-const HtmlToPlainText = ({ html }) => {
-  const dummyElement = document.createElement("div");
-  dummyElement.innerHTML = html;
-  const plainText = dummyElement.innerText;
+// const HtmlToPlainText = ({ html }) => {
+//   const dummyElement = document.createElement("div");
+//   dummyElement.innerHTML = html;
+//   const plainText = dummyElement.innerText;
 
-  return <p>{plainText}</p>;
-};
+//   return <p>{plainText}</p>;
+// };
 
-export default HtmlToPlainText;
+// export default HtmlToPlainText;
 
 interface OverviewDoneTasksProps {
   icon: string;
@@ -84,7 +84,7 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
       event.stopPropagation();
       return;
     }
-    router.push(`/${locale}/details`);
+    router.push(`/${locale}/jobs`);
   };
   const handleBookmark = () => {
     setShowMail(true);
@@ -230,7 +230,7 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
                   <Divider sx={{ my: 2 }} />
                   <Box>
                     <Paragraph>
-                      <HtmlToPlainText html={description} />
+                     {description} 
                     </Paragraph>
                   </Box>
                 </Box>
