@@ -17,6 +17,7 @@
     "@mui/system": "^5.15.15",
     "@untitled-ui/icons-react": "^0.1.2",
     "axios": "^1.7.1",
+    "html-react-parser": "^5.1.10",
     "i18next": "^23.11.4",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-resources-to-backend": "^1.2.1",

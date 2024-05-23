@@ -8,16 +8,34 @@ import {
   Typography,
 } from "@mui/material";
 import { FC } from "react";
+import PropTypes from "prop-types";
 import JobIcon from "../../public/assets/JobIcon";
 import LocatioIcon from "../../public/assets/LocatioIcon";
 import MoneyIcon from "../../public/assets/MoneyIcon";
 import CalanderIcon from "../../public/assets/calenderIcon";
 import ExpirationIcon from "../../public/assets/expirationIcon";
-import { useTranslations } from "next-intl";
 
-const JobOverview: FC = () => {
-  const t = useTranslations("details");
 
+interface JobOverviewProps {
+  created: string;
+
+  location: string;
+  salary: string;
+
+  expire: string;
+  minExperience: string;
+}
+
+export const JobOverview: FC<JobOverviewProps> = ({
+  // const t = useTranslations("details");
+  created,
+
+  location,
+  salary,
+
+  expire,
+  minExperience,
+}) => {
   return (
     <Card
       elevation={0}
@@ -29,7 +47,7 @@ const JobOverview: FC = () => {
         marginTop: 2,
       }}
     >
-      <CardHeader title={t("jobOverview")} sx={{ color: "#F3CB05" }} />
+      <CardHeader title={"jobOverview"} sx={{ color: "#F3CB05" }} />
       <Stack direction="column" padding={1}>
         <Stack direction="row" alignItems="center">
           <Box>
@@ -47,7 +65,7 @@ const JobOverview: FC = () => {
                   }}
                   variant="subtitle2"
                 >
-                  {t("JobPosted")}
+                  {/* {t("JobPosted")} */} Job Posted
                 </Typography>
               }
               secondary={
@@ -60,7 +78,7 @@ const JobOverview: FC = () => {
                   }}
                   variant="body2"
                 >
-                  June 20, 2021
+                  {created}
                 </Typography>
               }
               sx={{ pl: 2 }}
@@ -83,7 +101,7 @@ const JobOverview: FC = () => {
                   }}
                   variant="subtitle2"
                 >
-                  {t("location")}
+                  {/* {t("location")} */} Location
                 </Typography>
               }
               secondary={
@@ -96,7 +114,7 @@ const JobOverview: FC = () => {
                   }}
                   variant="body2"
                 >
-                  New York
+                  {location}
                 </Typography>
               }
               sx={{ pl: 2 }}
@@ -119,7 +137,7 @@ const JobOverview: FC = () => {
                   }}
                   variant="subtitle2"
                 >
-                  {t("offeredSalary")}
+                  {/* {t("offeredSalary")} */}Offred Salary
                 </Typography>
               }
               secondary={
@@ -132,7 +150,7 @@ const JobOverview: FC = () => {
                   }}
                   variant="body2"
                 >
-                  $150 - $180 / week
+                  {salary}
                 </Typography>
               }
               sx={{ pl: 2 }}
@@ -155,7 +173,7 @@ const JobOverview: FC = () => {
                   }}
                   variant="subtitle2"
                 >
-                  {t("expirationDate")}
+                  {/* {t("expirationDate")} */}Expiration Date
                 </Typography>
               }
               secondary={
@@ -168,7 +186,7 @@ const JobOverview: FC = () => {
                   }}
                   variant="body2"
                 >
-                  May 6, 2026
+                  {expire}
                 </Typography>
               }
               sx={{ pl: 2 }}
@@ -191,7 +209,7 @@ const JobOverview: FC = () => {
                   }}
                   variant="subtitle2"
                 >
-                  {t("experience")}
+                  {/* {t("experience")} */}experience
                 </Typography>
               }
               secondary={
@@ -204,7 +222,7 @@ const JobOverview: FC = () => {
                   }}
                   variant="body2"
                 >
-                  4 Year
+                  {minExperience}
                 </Typography>
               }
               sx={{ pl: 2 }}
@@ -216,4 +234,10 @@ const JobOverview: FC = () => {
   );
 };
 
-export default JobOverview;
+JobOverview.propTypes = {
+  created: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  salary: PropTypes.string.isRequired,
+  expire: PropTypes.string.isRequired,
+  minExperience: PropTypes.string.isRequired,
+};

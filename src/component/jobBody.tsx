@@ -1,27 +1,23 @@
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { FC } from "react";
+import PropTypes from "prop-types";
 
-type job = {
-  _id: string;
+// const HtmlToPlainText = ({ html }) => {
+//   const dummyElement = document.createElement("div");
+//   dummyElement.innerHTML = html;
+//   const plainText = dummyElement.innerText;
+
+//   return <p>{plainText}</p>;
+// };
+
+// export default HtmlToPlainText;
+
+interface JobProps {
   description: string;
-};
-async function getData() {
-  const res = await fetch("https://api.talinty.com/api/v1/jobs");
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data sorry");
-  }
-
-  return res.json();
 }
 
-export default async function JobBody() {
-  const t = useTranslations("details");
-
-  const jobs = await getData();
-
+export const JobBody: FC<JobProps> = ({ description }) => {
   return (
     <Box sx={{ p: 2, maxWidth: 1000 }}>
       <Box>
@@ -33,15 +29,14 @@ export default async function JobBody() {
           }}
           variant="subtitle1"
         >
-          {t("jobDescription")}
+          Job Description
         </Typography>
-        {jobs.map((job: job) => (
-          <Box
-            key={job._id}
-            dangerouslySetInnerHTML={{ __html: job.description }}
-          />
-        ))}
+
+       {description} 
       </Box>
     </Box>
   );
-}
+};
+JobBody.propTypes = {
+  description: PropTypes.string.isRequired,
+};
