@@ -6,7 +6,7 @@ import { JobDetails } from "@/component/jobDetails";
 import { JobBody } from "@/component/jobBody";
 import { JobOverview } from "@/component/jobOverview";
 import parse from "html-react-parser";
-import { Link, redirect } from "@/navigation";
+import { Link } from "@/navigation";
 import { getTranslations } from "next-intl/server";
 
 export async function generateStaticParams() {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState, type FC } from "react";
+import {  FC, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
