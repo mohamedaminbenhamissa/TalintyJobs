@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, FC } from "react";
+import React, { useState } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
@@ -12,7 +12,7 @@ import SearchMdIcon from "@untitled-ui/icons-react/build/esm/SearchMd";
 import { Logo } from "@/component/logo";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import axios from "axios";
+
 import type { NavColor } from "@/types/settings";
 
 const SIDE_NAV_WIDTH = 280;
