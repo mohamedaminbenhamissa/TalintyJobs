@@ -5,8 +5,9 @@ import axios from "axios";
 import { JobDetails } from "@/component/jobDetails";
 import { JobBody } from "@/component/jobBody";
 import { JobOverview } from "@/component/jobOverview";
-
 import parse from "html-react-parser";
+import { Link, redirect } from "@/navigation";
+import { getTranslations } from "next-intl/server";
 
 export async function generateStaticParams() {
   const payload = {
@@ -57,6 +58,7 @@ export default async function Job({ params }: { params: Params }) {
   const jobData = await getJob(jobId);
   const jobsArray = Array.isArray(jobData) ? jobData : [jobData];
   console.log("🚀 ~ Job ~ jobsArray:", jobsArray);
+  const t = await getTranslations("details");
 
   return (
     <main className="flex min-h-screen w-full flex-col items-start justify-between">
@@ -69,27 +71,30 @@ export default async function Job({ params }: { params: Params }) {
             gap={1}
             justifyContent="space-between"
           >
-            <Button style={{ color: "black" }}>
-              <KeyboardBackspaceIcon />
-              {"backhomebtn"}
-            </Button>
+            <Link href="/">
+              <Button style={{ color: "black" }}>
+                <KeyboardBackspaceIcon />
+                {t("backhomebtn")}
+              </Button>
+            </Link>
             <LocalSwitcher />
           </Grid>
 
-          <Box width={"100%"}>
-            
+          <Box width={"100%"} marginTop={"10px"}>
             <Grid container spacing={3}>
               {jobsArray.map((job) => (
                 <Grid item xs={12} key={job?._id}>
                   <JobDetails
-                    icon={job?.image}
-                    title={job?.name || "Not available"}
-                    department={job?.department || "Not available"}
-                    location={job?.location || "Not available"}
-                    salary={job?.salary || "Not available"}
-                    jobType={job?.type || "Not available"}
-                    experienceLevel={job?.minExperience || "Not available"}
-                    expireDate={job?.expireDate || "Not available"}
+                    icon={`https://astrolab.co/wp-content/uploads/2023/10/astrolab-1.svg`}
+                    title={job?.name || t("notavailable")}
+                    department={job?.department || t("notavailable")}
+                    location={job?.location || t("notavailable")}
+                    salary={job?.salary || t("notavailable")}
+                    jobType={job?.type || t("notavailable")}
+                  
+                    experienceLevel={job?.minExperience || t("notavailable")}
+                    expire={job?.expire || t("notavailable")}
+                    _id={job?._id || t("notavailable")}
                   />
                 </Grid>
               ))}
@@ -103,31 +108,28 @@ export default async function Job({ params }: { params: Params }) {
             marginLeft={4}
             marginRight={2}
           >
-            <Box >
-       
-                {jobsArray.map((job) => (
-                  <Grid item xs={12} key={job?._id}>
-                    <JobBody
-                     description={parse(job?.description || "Not available")}
-                    />
-                  </Grid>
-                ))}
-         
+            <Box>
+              {jobsArray.map((job) => (
+                <Grid item xs={12} key={job?._id}>
+                  <JobBody
+                    description={parse(job?.description || t("notavailable"))}
+                  />
+                </Grid>
+              ))}
             </Box>
             <Box>
-             
-                {jobsArray.map((job) => (
-                  <Grid item xs={12} key={job?._id}>
-                    <JobOverview
-                      created={job?.created || "Not available"}
-                      location={job?.location || "Not available"}
-                      salary={job?.salary || "Not available"}
-                      expire={job?.expire || "Not available"}
-                      minExperience={job?.minExperience || "Not available"}
-                    />
-                  </Grid>
-                ))}
-    
+              {jobsArray.map((job) => (
+                <Grid item xs={12} key={job?._id}>
+                  <JobOverview
+                    created={job?.created || t("notavailable")}
+                    location={job?.location || t("notavailable")}
+                    salary={job?.salary || t("notavailable")}
+                    expire={job?.expire || t("notavailable")}
+                    minExperience={job?.minExperience || t("notavailable")}
+                    remote={job?.remote ||  t("notavailable")}
+                  />
+                </Grid>
+              ))}
             </Box>
           </Stack>
         </Grid>

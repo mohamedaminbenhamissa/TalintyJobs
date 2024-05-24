@@ -15,6 +15,7 @@ import MoneyIcon from "../../public/assets/MoneyIcon";
 import CalanderIcon from "../../public/assets/calenderIcon";
 import ExpirationIcon from "../../public/assets/expirationIcon";
 import { useTranslations } from "next-intl";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 
 interface JobOverviewProps {
@@ -25,6 +26,7 @@ interface JobOverviewProps {
 
   expire: string;
   minExperience: string;
+  remote:string
 }
 
 export const JobOverview: FC<JobOverviewProps> = ({
@@ -33,6 +35,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
   salary,
   expire,
   minExperience,
+  remote
 }) => {
   const t = useTranslations("details");
   return (
@@ -46,11 +49,11 @@ export const JobOverview: FC<JobOverviewProps> = ({
         marginTop: 2,
       }}
     >
-      <CardHeader title={"jobOverview"} sx={{ color: "#F3CB05" }} />
+      <CardHeader title={t("jobOverview")} sx={{ color: "#F3CB05" }} />
       <Stack direction="column" padding={1}>
         <Stack direction="row" alignItems="center">
-          <Box>
-            <CalanderIcon height={32} width={32} />
+          <Box sx={{ p:1}} >
+            <CalanderIcon height={32} width={32}  />
           </Box>
           <List>
             <ListItemText
@@ -85,7 +88,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
           </List>
         </Stack>
         <Stack direction="row" alignItems="center">
-          <Box>
+          <Box sx={{ p:1}}>
             <LocatioIcon height={32} width={32} />
           </Box>
           <List>
@@ -121,7 +124,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
           </List>
         </Stack>
         <Stack direction="row" alignItems="center">
-          <Box>
+          <Box sx={{ p:1}}>
             <MoneyIcon height={32} width={32} />
           </Box>
           <List>
@@ -157,7 +160,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
           </List>
         </Stack>
         <Stack direction="row" alignItems="center">
-          <Box>
+          <Box sx={{ p:1}}>
             <ExpirationIcon height={32} width={32} />
           </Box>
           <List>
@@ -193,7 +196,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
           </List>
         </Stack>
         <Stack direction="row" alignItems="center">
-          <Box>
+          <Box sx={{ p:1}}>
             <JobIcon height={32} width={32} />
           </Box>
           <List>
@@ -228,6 +231,42 @@ export const JobOverview: FC<JobOverviewProps> = ({
             />
           </List>
         </Stack>
+        <Stack direction="row" alignItems="center">
+          <Box sx={{ p:1}}>
+          <AccessTimeIcon height={32} width={32} sx={{ color: "#F3CB05" }} />
+          </Box>
+          <List>
+            <ListItemText
+              disableTypography
+              primary={
+                <Typography
+                  sx={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                  variant="subtitle2"
+                >
+                  {t("remoteTypes")}
+                </Typography>
+              }
+              secondary={
+                <Typography
+                  color="text.secondary"
+                  sx={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                  variant="body2"
+                >
+                  {remote}
+                </Typography>
+              }
+              sx={{ pl: 2 }}
+            />
+          </List>
+        </Stack>
       </Stack>
     </Card>
   );
@@ -239,4 +278,6 @@ JobOverview.propTypes = {
   salary: PropTypes.string.isRequired,
   expire: PropTypes.string.isRequired,
   minExperience: PropTypes.string.isRequired,
+  remote: PropTypes.string.isRequired,
+
 };

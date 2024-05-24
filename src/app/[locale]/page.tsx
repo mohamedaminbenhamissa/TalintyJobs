@@ -6,6 +6,7 @@ import LocalSwitcher from "@/component/localSwitcher";
 import axios from "axios";
 import { OverviewDoneTasks } from "@/component/overview-done-tasks";
 import parse from "html-react-parser";
+import { getTranslations } from "next-intl/server";
 
 type Job = {
   department?: string;
@@ -57,6 +58,7 @@ export default async function Home() {
 
   const { jobs } = await getJobs();
   console.log("🚀 ~ Home ~ jobs:", jobs);
+  const t = await getTranslations("Home");
 
   return (
     <main className="flex min-h-screen w-full flex-col items-start justify-between">
@@ -69,27 +71,27 @@ export default async function Home() {
             display={"flex"}
             justifyContent="space-between"
           >
-            <Typography variant="h5"> Latest Jobs</Typography>
+            <Typography variant="h5"> {t("hometitle")}</Typography>
             <Stack direction="row" spacing={4}>
               <LocalSwitcher />
             </Stack>
           </Stack>
 
-          <Box width={"100%"}>
+          <Box width={"100%"} marginTop={"10px"}>
             <Grid container spacing={3}>
               {jobs?.map((job: Job) => (
                 <Grid width={"100%"} item key={job?._id}>
                   <OverviewDoneTasks
                     icon={`https://astrolab.co/wp-content/uploads/2023/10/astrolab-1.svg`}
-                    title={job?.name || "Not available"}
-                    department={job?.department || "Not available"}
-                    location={job?.location || "Not available"}
-                    salary={job?.salary || "Not available"}
-                    jobType={job?.type || "Not available"}
-                    remote={job?.remote || "Not available"}
-                    experienceLevel={job?.minExperience || "Not available"}
-                    description={job?.description || "Not available"}
-                    slug={job?.slug || "not"}
+                    title={job?.name || t("notavailable")}
+                    department={job?.department || t("notavailable")} 
+                    location={job?.location || t("notavailable")}
+                    salary={job?.salary || t("notavailable")}
+                    jobType={job?.type || t("notavailable")}
+                    remote={job?.remote || t("notavailable")}
+                    experienceLevel={job?.minExperience || t("notavailable")}
+                    description={job?.description || t("notavailable")}
+                    slug={job?.slug || t("notavailable")}
                   />
                 </Grid>
               ))}
