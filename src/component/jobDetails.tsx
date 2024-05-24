@@ -20,6 +20,7 @@ import WorkHistoryOutlinedIcon from "@mui/icons-material/WorkHistoryOutlined";
 import RecentActorsOutlinedIcon from "@mui/icons-material/RecentActorsOutlined";
 
 interface JobDetailsProps {
+  _id: string;
   icon: string;
   title: string;
   department: string;
@@ -27,10 +28,11 @@ interface JobDetailsProps {
   salary: string;
   experienceLevel: string;
   jobType: string;
-  expireDate: string;
+  expire: string;
 }
 
 export const JobDetails: FC<JobDetailsProps> = ({
+  _id,
   icon,
   title,
   department,
@@ -38,7 +40,7 @@ export const JobDetails: FC<JobDetailsProps> = ({
   salary,
   jobType,
   experienceLevel,
-  expireDate,
+  expire,
 }) => {
   const [showform, setShowForm] = useState(false);
   const [showmail, setShowMail] = useState(false);
@@ -64,14 +66,16 @@ export const JobDetails: FC<JobDetailsProps> = ({
           direction={{ xs: "column", md: "row" }}
           justifyContent="space-between"
         >
-          <Stack spacing={2} direction={{ xs: "column", md: "row" }} flex={1}>
-            <Image
-              src="/assets/iconly/iconly-glass-tick.svg"
-              alt="icon"
-              width={60}
-              height={60}
-            />
-
+          <Stack gap={5} direction={{ xs: "column", md: "row" }} flex={1}>
+          <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
+                  <Image
+                    src={icon}
+                    alt="icon"
+                    width={60}
+                    height={60}
+                    objectFit={"cover"}
+                  />
+                </Box>
             <Box flex={1}>
               <Box
                 display="flex"
@@ -169,7 +173,11 @@ export const JobDetails: FC<JobDetailsProps> = ({
                     justifyContent="center"
                     alignItems="center"
                   >
-                    <ApplyForm onClose={handleClose} visible={showform} />
+                    <ApplyForm
+                      onClose={handleClose}
+                      visible={showform}
+                      jobId={_id}
+                    />
                   </Box>
                 )}
               </Box>
@@ -215,7 +223,7 @@ export const JobDetails: FC<JobDetailsProps> = ({
                 fontSize={12}
                 textAlign={{ xs: "center", md: "right" }}
               >
-                Application Ends:
+                {t("expirationDate")}
               </Typography>
               <Typography
                 color="error"
@@ -223,7 +231,7 @@ export const JobDetails: FC<JobDetailsProps> = ({
                 fontSize={12}
                 sx={{ xs: "center", md: "right", fontWeight: "bolder" }}
               >
-                {expireDate}
+                {expire}
               </Typography>
             </Stack>
           </Stack>

@@ -1,6 +1,6 @@
 {
   "Home": {
-    "hometitle": " Job List ",
+    "hometitle": "Latest Jobs",
     "search": "Search By Keyword",
     "type": "Type",
     "department": "Department",
@@ -12,7 +12,8 @@
     "halfRemote": "Half Remote",
     "fullRemote": "Full Remote",
     "Share": "Share this opportunity ",
-    "LatestJobs" : "Latest Jobs"
+    "LatestJobs" : "Latest Jobs",
+    "notavailable" : "Not available"
   },
   "details": {
     "backhomebtn": "Back To Home",
@@ -40,6 +41,10 @@
     "lastnameerror": "Last Name cannot be empty.",
     "emailerror": "Email cannot be empty.",
     "emailerror2": "Invalid email address.",
-    "fileError": "Only PDF or TXT files are allowed."
+    "fileError": "Only PDF or TXT files are allowed.",
+    "notavailable" : "Not available",
+    "remoteTypes": "Remote Types"
+    
+
   }
 }

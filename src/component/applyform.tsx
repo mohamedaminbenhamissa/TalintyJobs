@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect, FC } from "react";
+import { useCallback, useState, FC } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -11,16 +11,50 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { useDropzone } from "react-dropzone";
 import { useTranslations } from "next-intl";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 interface FormProps {
+  jobId:string
   visible: boolean;
   onClose: () => void;
 }
 
-const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
+const submitApplication = async (formData) => {
+  const payload = {
+    params: {
+      active: true,
+    },
+    fields: ["jobId", "firstName", "lastName", "email", "resume"].join(","),
+  };
+
+  try {
+    const response = await axios.post(
+      "http://localhost:5002/api/v1/evaluation/",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        params: {
+          params: { payload: payload },
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error submitting application:", error);
+    throw error;
+  }
+};
+
+const ApplyForm: FC<FormProps> = ({ visible, onClose, jobId }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -28,13 +62,16 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
   const [fileError, setFileError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const t = useTranslations("details");
+
   const onDrop = useCallback(
     (acceptedFiles: File[], fileRejections: any[]) => {
       if (fileRejections.length > 0) {
         setFileError(t("fileError"));
         setFileName("");
+        setResumeFile(null);
       } else if (acceptedFiles.length > 0) {
         setFileName(acceptedFiles[0].name);
+        setResumeFile(acceptedFiles[0]);
         setFileError("");
       }
     },
@@ -78,22 +115,48 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
       setEmailError("");
     }
 
+    if (!resumeFile) {
+      setFileError(t("fileError"));
+      isValid = false;
+    } else {
+      setFileError("");
+    }
+
     if (isValid) {
       setSubmitting(true);
-      try {
-        const response = await axios.post("/api/submitForm", {
-          firstName,
-          lastName,
-          email,
-          fileName,
-        });
-        console.log("Form submitted successfully:", response.data);
+      const formData = new FormData();
+      formData.append("jobId", jobId);
+      formData.append("email", email);
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("resume", resumeFile as File);
 
-        alert("Form submitted successfully!");
+      try {
+        const response = await submitApplication(formData);
+        console.log("Form submitted successfully:", response);
+
+        toast.success("Form submitted successfully!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        onClose();
       } catch (error) {
         console.error("Error submitting form:", error);
 
-        alert("Failed to submit form. Please try again later.");
+        toast.error("You already applied to this job.", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       } finally {
         setSubmitting(false);
       }
@@ -223,6 +286,7 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose }) => {
           </CardContent>
         </Card>
       </Container>
+      <ToastContainer />
     </Box>
   );
 };

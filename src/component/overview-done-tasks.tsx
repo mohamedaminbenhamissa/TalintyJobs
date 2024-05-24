@@ -23,10 +23,8 @@ import { styled } from "@mui/system";
 import { Share } from "./shareModal";
 import ShareIcon from "@mui/icons-material/Share";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import parse from "html-react-parser"
+import parse from "html-react-parser";
 import { useRouter } from "@/navigation";
-
-
 
 interface OverviewDoneTasksProps {
   icon: string;
@@ -38,7 +36,7 @@ interface OverviewDoneTasksProps {
   jobType: string;
   description: string;
   remote: string;
-  slug:string;
+  slug: string;
 }
 
 const Paragraph = styled("div")({
@@ -60,7 +58,7 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
   experienceLevel,
   description,
   remote,
-  slug
+  slug,
 }) => {
   const [showMail, setShowMail] = useState(false);
   const [showShare, setShowShare] = useState(false);
@@ -81,7 +79,6 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
       return;
     }
     router.push(`/jobs/${slug}`);
-
   };
   const handleBookmark = () => {
     setShowMail(true);
@@ -101,8 +98,17 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
         >
           <Stack spacing={2} direction="column">
             <Box onClick={handleNavigate}>
-              <Stack spacing={5} direction={{ xs: "column", md: "row" }}>
-                <Image src={icon} alt="icon" width={60} height={60} />
+              <Stack direction={{ xs: "column", md: "row" }} gap={5}
+              >
+                <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
+                  <Image
+                    src={icon}
+                    alt="icon"
+                    width={60}
+                    height={60}
+                    objectFit={"cover"}
+                  />
+                </Box>
 
                 <Box flex={1}>
                   <Box display="flex" justifyContent="space-between">
@@ -223,20 +229,10 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
                         {remote}
                       </Typography>
                     </Box>
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <SvgIcon>
-                        <AccessTimeIcon sx={{ color: "#F3CB05" }} />
-                      </SvgIcon>
-                      <Typography color="text.secondary" variant="body2">
-                        {slug}
-                      </Typography>
-                    </Box>
                   </Box>
                   <Divider sx={{ my: 2 }} />
                   <Box>
-                    <Paragraph>
-                     {parse(description)}
-                    </Paragraph>
+                    <Paragraph>{parse(description)}</Paragraph>
                   </Box>
                 </Box>
               </Stack>
