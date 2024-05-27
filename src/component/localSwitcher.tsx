@@ -2,10 +2,8 @@
 
 import React, { useTransition } from "react";
 
-
 import { useLocale } from "next-intl";
 import {
-  FormControl,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -17,13 +15,13 @@ export default function LocalSwitcher() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const localActive = useLocale();
- const pathname =usePathname();
+  const pathname = usePathname();
 
   const onSelectChange = (e: SelectChangeEvent) => {
     const nextLocale = e.target.value;
 
     startTransition(() => {
-      router.replace(pathname,{locale:nextLocale});
+      router.replace(pathname, { locale: nextLocale });
     });
   };
   return (

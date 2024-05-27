@@ -44,8 +44,7 @@ const Paragraph = styled("div")({
   WebkitBoxOrient: "vertical",
   overflow: "hidden",
   textOverflow: "ellipsis",
-  WebkitLineClamp: 2,
-  maxHeight: "3em",
+  WebkitLineClamp: 4,
 });
 
 export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
@@ -98,15 +97,14 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
         >
           <Stack spacing={2} direction="column">
             <Box onClick={handleNavigate}>
-              <Stack direction={{ xs: "column", md: "row" }} gap={5}
-              >
+              <Stack direction={{ xs: "column", md: "row" }} gap={5}>
                 <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
                   <Image
                     src={icon}
-                    alt="icon"
+                    alt={title}
                     width={60}
                     height={60}
-                    objectFit={"cover"}
+                    style={{ objectFit: "contain" }}
                   />
                 </Box>
 

@@ -33,7 +33,7 @@ const SendMail: React.FC<MailProps> = ({ visible, onClose }) => {
       setEmailError("");
       setIsEmailValid(false);
     } else if (!validateEmail(email)) {
-      setEmailError(t("emailerror2"));
+      setEmailError(t("emailError2"));
       setIsEmailValid(false);
     } else {
       setEmailError("");
@@ -57,7 +57,7 @@ const SendMail: React.FC<MailProps> = ({ visible, onClose }) => {
         setSubmitting(false);
       }
     } else {
-      setEmailError(t("emailerror2"));
+      setEmailError(t("emailError2"));
     }
   };
 

@@ -1,6 +1,6 @@
 {
   "Home": {
-    "hometitle": "Latest Jobs",
+    "homeTitle": "Latest Jobs",
     "search": "Search By Keyword",
     "type": "Type",
     "department": "Department",
@@ -11,13 +11,19 @@
     "noRemote": "No Remote",
     "halfRemote": "Half Remote",
     "fullRemote": "Full Remote",
+    "STAGE": "Internship",
     "Share": "Share this opportunity ",
     "LatestJobs" : "Latest Jobs",
-    "notavailable" : "Not available"
+    "notAvailable" : "Not available"
   },
   "details": {
-    "backhomebtn": "Back To Home",
+    "btnBackToHome": "Back To Home",
     "applybtn": "Apply Now",
+    "STAGE": "Internship",
+    "noRemote": "No Remote",
+    "halfRemote": "Half Remote",
+    "fullRemote": "Full Remote",
+    "submitting": "Submitting...",
     "jobDescription": "Job Description",
     "KeyResponsibilities": "Key Responsibilities",
     "SkillExperience": "Skill & Experience",
@@ -25,7 +31,7 @@
     "JobPosted": "Job Posted",
     "location": "Location",
     "offeredSalary": "Offered Salary",
-    "expirationDate": " Expiration Date",
+    "expirationDate": "Expiration Date: ",
     "experience": "Experience",
     "cv": "Your CV",
     "firstname": "First Name ",
@@ -33,16 +39,16 @@
     "email": "Email Adress",
     "send": "Send",
     "cancel": "Cancel",
-    "titreapplyform": "Apply for this job",
+    "applyFormTitle": "Apply for this job",
     "emailremind": "Get Notified",
     "emailCTA": "Don't miss out on your dream job! Bookmark this opportunity and enter your email to stay updated with the latest job openings and notifications tailored just for you.",
-    "selectedfile": "Selected File",
-    "firstnameerror": "First Name cannot be empty.",
-    "lastnameerror": "Last Name cannot be empty.",
-    "emailerror": "Email cannot be empty.",
-    "emailerror2": "Invalid email address.",
+    "selectedFile": "Selected File",
+    "firstNameError": "First Name cannot be empty.",
+    "lastNameError": "Last Name cannot be empty.",
+    "emailError": "Email cannot be empty.",
+    "emailError2": "Invalid email address.",
     "fileError": "Only PDF or TXT files are allowed.",
-    "notavailable" : "Not available",
+    "notAvailable" : "Not available",
     "remoteTypes": "Remote Types"
     
 

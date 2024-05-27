@@ -9,7 +9,7 @@ import parse from "html-react-parser";
 import { Link } from "@/navigation";
 import { getTranslations } from "next-intl/server";
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<{ slug: string; _id: string }[]> {
   const payload = {
     params: {
       active: true,
@@ -18,11 +18,10 @@ export async function generateStaticParams() {
   };
 
   try {
-    const response = await axios.get("http://localhost:5002/api/v1/job/", {
-      params: { payload: payload },
+    const response = await axios.get(`${process.env.BACKEND_URL}job/`, {
+      params: { payload: payload }
     });
 
-    console.log(response.data);
     const jobs = response.data.jobs;
 
     if (Array.isArray(jobs)) {
@@ -31,21 +30,24 @@ export async function generateStaticParams() {
         _id: job._id,
       }));
     } else {
-      throw new Error("Expected an array of jobs");
+      console.error("Expected an array of jobs");
+      return [];
     }
   } catch (error) {
     console.error("Error fetching jobs:", error);
+    return [];
   }
 }
 
 const getJob = async (jobId: string) => {
   try {
     const response = await axios.get(
-      `http://localhost:5002/api/v1/job/${jobId}`
+        `${process.env.BACKEND_URL}job/${jobId}`,
     );
     return response.data;
   } catch (error) {
     console.error("Error fetching job:", error);
+    return null;
   }
 };
 type Params = {
@@ -53,13 +55,12 @@ type Params = {
 };
 
 export default async function Job({ params }: { params: Params }) {
-  console.log("🚀 ~ Job ~ Job:", Job);
   const { slug: jobId } = params;
   const jobData = await getJob(jobId);
   const jobsArray = Array.isArray(jobData) ? jobData : [jobData];
-  console.log("🚀 ~ Job ~ jobsArray:", jobsArray);
   const t = await getTranslations("details");
 
+  // @ts-ignore
   return (
     <main className="flex min-h-screen w-full flex-col items-start justify-between">
       <Box width={"100%"}>
@@ -74,7 +75,7 @@ export default async function Job({ params }: { params: Params }) {
             <Link href="/">
               <Button style={{ color: "black" }}>
                 <KeyboardBackspaceIcon />
-                {t("backhomebtn")}
+                {t("btnBackToHome")}
               </Button>
             </Link>
             <LocalSwitcher />
@@ -85,16 +86,15 @@ export default async function Job({ params }: { params: Params }) {
               {jobsArray.map((job) => (
                 <Grid item xs={12} key={job?._id}>
                   <JobDetails
-                    icon={`https://astrolab.co/wp-content/uploads/2023/10/astrolab-1.svg`}
-                    title={job?.name || t("notavailable")}
-                    department={job?.department || t("notavailable")}
-                    location={job?.location || t("notavailable")}
-                    salary={job?.salary || t("notavailable")}
-                    jobType={job?.type || t("notavailable")}
-                  
-                    experienceLevel={job?.minExperience || t("notavailable")}
-                    expire={job?.expire || t("notavailable")}
-                    _id={job?._id || t("notavailable")}
+                    icon={job?.image}
+                    title={job?.name || t("notAvailable")}
+                    department={job?.department || t("notAvailable")}
+                    location={job?.location || t("notAvailable")}
+                    salary={job?.salary || t("notAvailable")}
+                    jobType={t(job?.type) || t("notAvailable")}
+                    experienceLevel={job?.minExperience || t("notAvailable")}
+                    expire={job?.expire || t("notAvailable")}
+                    _id={job?._id || t("notAvailable")}
                   />
                 </Grid>
               ))}
@@ -112,7 +112,7 @@ export default async function Job({ params }: { params: Params }) {
               {jobsArray.map((job) => (
                 <Grid item xs={12} key={job?._id}>
                   <JobBody
-                    description={parse(job?.description || t("notavailable"))}
+                    description={parse(job?.description || t("notAvailable"))}
                   />
                 </Grid>
               ))}
@@ -121,12 +121,12 @@ export default async function Job({ params }: { params: Params }) {
               {jobsArray.map((job) => (
                 <Grid item xs={12} key={job?._id}>
                   <JobOverview
-                    created={job?.created || t("notavailable")}
-                    location={job?.location || t("notavailable")}
-                    salary={job?.salary || t("notavailable")}
-                    expire={job?.expire || t("notavailable")}
-                    minExperience={job?.minExperience || t("notavailable")}
-                    remote={job?.remote ||  t("notavailable")}
+                    created={job?.created || t("notAvailable")}
+                    location={job?.location || t("notAvailable")}
+                    salary={job?.salary || t("notAvailable")}
+                    expire={job?.expire || t("notAvailable")}
+                    minExperience={job?.minExperience || t("notAvailable")}
+                    remote={t(job?.remote) || t("notAvailable")}
                   />
                 </Grid>
               ))}

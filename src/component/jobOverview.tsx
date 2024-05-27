@@ -17,7 +17,6 @@ import ExpirationIcon from "../../public/assets/expirationIcon";
 import { useTranslations } from "next-intl";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
-
 interface JobOverviewProps {
   created: string;
 
@@ -26,7 +25,7 @@ interface JobOverviewProps {
 
   expire: string;
   minExperience: string;
-  remote:string
+  remote: string;
 }
 
 export const JobOverview: FC<JobOverviewProps> = ({
@@ -35,7 +34,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
   salary,
   expire,
   minExperience,
-  remote
+  remote,
 }) => {
   const t = useTranslations("details");
   return (
@@ -52,8 +51,8 @@ export const JobOverview: FC<JobOverviewProps> = ({
       <CardHeader title={t("jobOverview")} sx={{ color: "#F3CB05" }} />
       <Stack direction="column" padding={1}>
         <Stack direction="row" alignItems="center">
-          <Box sx={{ p:1}} >
-            <CalanderIcon height={32} width={32}  />
+          <Box sx={{ p: 1 }}>
+            <CalanderIcon height={32} width={32} />
           </Box>
           <List>
             <ListItemText
@@ -67,7 +66,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
                   }}
                   variant="subtitle2"
                 >
-                  {t("JobPosted")} 
+                  {t("JobPosted")}
                 </Typography>
               }
               secondary={
@@ -88,7 +87,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
           </List>
         </Stack>
         <Stack direction="row" alignItems="center">
-          <Box sx={{ p:1}}>
+          <Box sx={{ p: 1 }}>
             <LocatioIcon height={32} width={32} />
           </Box>
           <List>
@@ -103,7 +102,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
                   }}
                   variant="subtitle2"
                 >
-                  {t("location")} 
+                  {t("location")}
                 </Typography>
               }
               secondary={
@@ -124,7 +123,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
           </List>
         </Stack>
         <Stack direction="row" alignItems="center">
-          <Box sx={{ p:1}}>
+          <Box sx={{ p: 1 }}>
             <MoneyIcon height={32} width={32} />
           </Box>
           <List>
@@ -139,7 +138,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
                   }}
                   variant="subtitle2"
                 >
-       {t("offeredSalary")} 
+                  {t("offeredSalary")}
                 </Typography>
               }
               secondary={
@@ -160,7 +159,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
           </List>
         </Stack>
         <Stack direction="row" alignItems="center">
-          <Box sx={{ p:1}}>
+          <Box sx={{ p: 1 }}>
             <ExpirationIcon height={32} width={32} />
           </Box>
           <List>
@@ -196,7 +195,7 @@ export const JobOverview: FC<JobOverviewProps> = ({
           </List>
         </Stack>
         <Stack direction="row" alignItems="center">
-          <Box sx={{ p:1}}>
+          <Box sx={{ p: 1 }}>
             <JobIcon height={32} width={32} />
           </Box>
           <List>
@@ -232,8 +231,12 @@ export const JobOverview: FC<JobOverviewProps> = ({
           </List>
         </Stack>
         <Stack direction="row" alignItems="center">
-          <Box sx={{ p:1}}>
-          <AccessTimeIcon height={32} width={32} sx={{ color: "#F3CB05" }} />
+          <Box sx={{ p: 1 }}>
+            <AccessTimeIcon
+              height={32}
+              width={32}
+              sx={{ color: "#F3CB05", height: 32, width: 32 }}
+            />
           </Box>
           <List>
             <ListItemText
@@ -279,5 +282,4 @@ JobOverview.propTypes = {
   expire: PropTypes.string.isRequired,
   minExperience: PropTypes.string.isRequired,
   remote: PropTypes.string.isRequired,
-
 };
