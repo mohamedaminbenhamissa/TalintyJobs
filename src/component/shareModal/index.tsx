@@ -80,7 +80,7 @@ const Share: FC<ModalTermsProps> = (props) => {
             <Box
               onClick={() => {
                 navigator.clipboard.writeText(
-                  `${process.env.NEXT_PUBLIC_DOMAIN_URL}/auctions/${auction_id}`
+                  `${process.env.NEXT_PUBLIC_DOMAIN_URL}/auctions/${auction_id}`,
                 );
 
                 !!onClose && onClose();

@@ -12,15 +12,15 @@ import { useDropzone } from "react-dropzone";
 import { useTranslations } from "next-intl";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 interface FormProps {
-  jobId:string
+  jobId: string;
   visible: boolean;
   onClose: () => void;
 }
 
-const submitApplication = async (formData) => {
+const submitApplication = async (formData: FormData) => {
   const payload = {
     params: {
       active: true,
@@ -34,11 +34,11 @@ const submitApplication = async (formData) => {
       formData,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "multipart/form-data"
         },
         params: {
-          params: { payload: payload },
-        },
+          params: { payload: payload }
+        }
       }
     );
 
@@ -75,7 +75,7 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose, jobId }) => {
         setFileError("");
       }
     },
-    [t]
+    [t],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -92,24 +92,24 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose, jobId }) => {
     let isValid = true;
 
     if (!firstName) {
-      setFirstNameError(t("firstnameerror"));
+      setFirstNameError(t("firstNameError"));
       isValid = false;
     } else {
       setFirstNameError("");
     }
 
     if (!lastName) {
-      setLastNameError(t("lastnameerror"));
+      setLastNameError(t("lastNameError"));
       isValid = false;
     } else {
       setLastNameError("");
     }
 
     if (!email) {
-      setEmailError(t("emailerror"));
+      setEmailError(t("emailError"));
       isValid = false;
     } else if (!validateEmail(email)) {
-      setEmailError(t("emailerror2"));
+      setEmailError(t("emailError2"));
       isValid = false;
     } else {
       setEmailError("");
@@ -132,19 +132,19 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose, jobId }) => {
       formData.append("resume", resumeFile as File);
 
       try {
-        const response = await submitApplication(formData);
-        console.log("Form submitted successfully:", response);
-
-        toast.success("Form submitted successfully!", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-        onClose();
+        await submitApplication(formData);
+        toast.success(
+          "Your application has been received. Please check your email.",
+          {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          },
+        );
       } catch (error) {
         console.error("Error submitting form:", error);
 
@@ -192,7 +192,7 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose, jobId }) => {
               <div>
                 <Box sx={{ p: 2 }}>
                   <Typography sx={{ fontSize: 40 }}>
-                    {t("titreapplyform")}
+                    {t("applyFormTitle")}
                   </Typography>
                 </Box>
               </div>
@@ -250,7 +250,7 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose, jobId }) => {
                   </div>
                   {fileName && (
                     <Typography variant="body2" sx={{ mt: 1 }}>
-                      {t("selectedfile")}: {fileName}
+                      {t("selectedFile")}: {fileName}
                     </Typography>
                   )}
                   {fileError && (
@@ -272,7 +272,7 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose, jobId }) => {
                     </Button>
                     <Button
                       fullWidth
-                      variant="outlined"
+                      variant="contained"
                       onClick={handleSubmit}
                       color="success"
                       disabled={submitting}

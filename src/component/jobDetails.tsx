@@ -1,6 +1,6 @@
 "use client";
 
-import {  FC, useState } from "react";
+import { FC, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -67,15 +67,15 @@ export const JobDetails: FC<JobDetailsProps> = ({
           justifyContent="space-between"
         >
           <Stack gap={5} direction={{ xs: "column", md: "row" }} flex={1}>
-          <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
-                  <Image
-                    src={icon}
-                    alt="icon"
-                    width={60}
-                    height={60}
-                    objectFit={"cover"}
-                  />
-                </Box>
+            <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
+              <Image
+                src={icon}
+                alt="icon"
+                width={60}
+                height={60}
+                style={{ objectFit: "contain" }}
+              />
+            </Box>
             <Box flex={1}>
               <Box
                 display="flex"

@@ -5,7 +5,6 @@ import { Box, Grid, Stack, Typography } from "@mui/material";
 import LocalSwitcher from "@/component/localSwitcher";
 import axios from "axios";
 import { OverviewDoneTasks } from "@/component/overview-done-tasks";
-import parse from "html-react-parser";
 import { getTranslations } from "next-intl/server";
 
 type Job = {
@@ -29,7 +28,7 @@ const getJobs = async () => {
     },
     fields: [
       "name",
-      "slug",
+      "image",
       "description",
       "remote",
       "location",
@@ -43,8 +42,8 @@ const getJobs = async () => {
   };
 
   try {
-    const response = await axios.get("http://localhost:5002/api/v1/job/", {
-      params: { payload: payload },
+    const response = await axios.get(`${process.env.BACKEND_URL}job/`, {
+      params: { payload: payload }
     });
     return response.data;
   } catch (error) {
@@ -54,10 +53,7 @@ const getJobs = async () => {
 };
 
 export default async function Home() {
-  console.log("🚀 ~ Home ~ Home:");
-
   const { jobs } = await getJobs();
-  console.log("🚀 ~ Home ~ jobs:", jobs);
   const t = await getTranslations("Home");
 
   return (
@@ -71,7 +67,7 @@ export default async function Home() {
             display={"flex"}
             justifyContent="space-between"
           >
-            <Typography variant="h5"> {t("hometitle")}</Typography>
+            <Typography variant="h5"> {t("homeTitle")}</Typography>
             <Stack direction="row" spacing={4}>
               <LocalSwitcher />
             </Stack>
@@ -82,16 +78,16 @@ export default async function Home() {
               {jobs?.map((job: Job) => (
                 <Grid width={"100%"} item key={job?._id}>
                   <OverviewDoneTasks
-                    icon={`https://astrolab.co/wp-content/uploads/2023/10/astrolab-1.svg`}
-                    title={job?.name || t("notavailable")}
-                    department={job?.department || t("notavailable")} 
-                    location={job?.location || t("notavailable")}
-                    salary={job?.salary || t("notavailable")}
-                    jobType={job?.type || t("notavailable")}
-                    remote={job?.remote || t("notavailable")}
-                    experienceLevel={job?.minExperience || t("notavailable")}
-                    description={job?.description || t("notavailable")}
-                    slug={job?.slug || t("notavailable")}
+                    icon={job?.image || ""}
+                    title={job?.name || t("notAvailable")}
+                    department={job?.department || t("notAvailable")}
+                    location={job?.location || t("notAvailable")}
+                    salary={job?.salary || t("notAvailable")}
+                    jobType={t(job?.type) || t("notAvailable")}
+                    remote={t(job?.remote) || t("notAvailable")}
+                    experienceLevel={job?.minExperience || t("notAvailable")}
+                    description={job?.description || t("notAvailable")}
+                    slug={job?.slug || t("notAvailable")}
                   />
                 </Grid>
               ))}
