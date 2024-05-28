@@ -7,43 +7,11 @@ import { JobBody } from "@/component/jobBody";
 import { JobOverview } from "@/component/jobOverview";
 import parse from "html-react-parser";
 import { Link } from "@/navigation";
-import { getTranslations } from "next-intl/server";
-
-export async function generateStaticParams(): Promise<{ slug: string; _id: string }[]> {
-  const payload = {
-    params: {
-      active: true,
-    },
-    fields: ["_id", "slug"].join(","),
-  };
-
-  try {
-    const response = await axios.get(`${process.env.BACKEND_URL}job/`, {
-      params: { payload: payload }
-    });
-
-    const jobs = response.data.jobs;
-
-    if (Array.isArray(jobs)) {
-      return jobs.map((job) => ({
-        slug: job.slug,
-        _id: job._id,
-      }));
-    } else {
-      console.error("Expected an array of jobs");
-      return [];
-    }
-  } catch (error) {
-    console.error("Error fetching jobs:", error);
-    return [];
-  }
-}
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 const getJob = async (jobId: string) => {
   try {
-    const response = await axios.get(
-        `${process.env.BACKEND_URL}job/${jobId}`,
-    );
+    const response = await axios.get(`${process.env.BACKEND_URL}job/${jobId}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching job:", error);
@@ -58,6 +26,7 @@ export default async function Job({ params }: { params: Params }) {
   const { slug: jobId } = params;
   const jobData = await getJob(jobId);
   const jobsArray = Array.isArray(jobData) ? jobData : [jobData];
+
   const t = await getTranslations("details");
 
   // @ts-ignore
