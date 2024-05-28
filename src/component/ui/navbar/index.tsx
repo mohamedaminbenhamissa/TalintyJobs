@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
@@ -12,43 +12,55 @@ import SearchMdIcon from "@untitled-ui/icons-react/build/esm/SearchMd";
 import { Logo } from "@/component/logo";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-
-import type { NavColor } from "@/types/settings";
+import axios from "axios";
 
 const SIDE_NAV_WIDTH = 280;
-
-interface SideNavProps {
-  color?: NavColor;
-}
 
 type Option = {
   text: string;
   value: string;
 };
 
-type remoteTypeOption = {
-  text: string;
-  value: string;
-};
-
 export function SideNav() {
+  console.log("🚀 ~ SideNav ~ SideNav:", SideNav);
   const pathname = usePathname();
   const t = useTranslations("Home");
   const locale = useLocale();
 
-  const remotetypesOpt: remoteTypeOption[] = [
-    { text: t("noRemote"), value: "noRemote" },
-    { text: t("halfRemote"), value: "halfRemote" },
-    { text: t("fullRemote"), value: "fullRemote" },
-  ];
-
   const [typesOpt, setTypesOpt] = useState<Option[]>([]);
   const [departments, setDepartments] = useState<Option[]>([]);
   const [minExperience, setMinExperience] = useState<Option[]>([]);
+  const [remoteTypes, setRemoteTypes] = useState<Option[]>([]);
   const [selectedType, setSelectedType] = useState<string>("");
   const [selectedRemoteType, setSelectedRemoteType] = useState<string>("");
   const [selectedDepartment, setSelectedDepartment] = useState<string>("");
   const [selectedExperience, setSelectedExperience] = useState<string>("");
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const payload = {
+      params: {
+        active: true,
+      },
+      fields: ["_id"].join(","),
+    };
+
+    try {
+      const response = await axios.get(`${process.env.BACKEND_URL}job/`, {
+        params: { payload: payload },
+      });
+      console.log("🚀 ~ fetchData ~ response:", response);
+      setData(response.data);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+      throw error;
+    }
+  };
+
 
   const handleSearch = () => {
     // Perform search with selected filters
@@ -59,7 +71,9 @@ export function SideNav() {
       selectedExperience,
     });
   };
-  if (pathname.startsWith(`/${locale}/jobs`)) return;
+
+  if (pathname.startsWith(`/${locale}/jobs`)) return null;
+
   return (
     <Drawer
       anchor="left"
@@ -70,7 +84,7 @@ export function SideNav() {
           overflowY: "auto",
           maxHeight: "100vh",
           backgroundColor: "white",
-          position: "sticky",
+          position: "relative",
           width: SIDE_NAV_WIDTH,
         },
       }}
@@ -121,7 +135,7 @@ export function SideNav() {
               <Typography variant="subtitle2">{t("remoteTypes")}</Typography>
               <Autocomplete
                 getOptionLabel={(option: Option) => option.text}
-                options={remotetypesOpt}
+                options={remoteTypes}
                 onChange={(event, value) =>
                   setSelectedRemoteType(value ? value.value : "")
                 }

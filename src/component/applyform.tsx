@@ -10,9 +10,9 @@ import { Stack } from "@mui/material";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { useDropzone } from "react-dropzone";
 import { useTranslations } from "next-intl";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 interface FormProps {
   jobId: string;
@@ -20,40 +20,10 @@ interface FormProps {
   onClose: () => void;
 }
 
-const submitApplication = async (formData: FormData) => {
-  const payload = {
-    params: {
-      active: true,
-    },
-    fields: ["jobId", "firstName", "lastName", "email", "resume"].join(","),
-  };
-
-  try {
-    const response = await axios.post(
-      "http://localhost:5002/api/v1/evaluation/",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
-        params: {
-          params: { payload: payload }
-        }
-      }
-    );
-
-    return response.data;
-  } catch (error) {
-    console.error("Error submitting application:", error);
-    throw error;
-  }
-};
-
 const ApplyForm: FC<FormProps> = ({ visible, onClose, jobId }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
@@ -87,6 +57,26 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose, jobId }) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
   };
+
+  const submitApplication = async (formData: FormData) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5002/api/v1/evaluation/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error("Error submitting application:", error);
+      throw error;
+    }
+  };
+  
 
   const handleSubmit = async () => {
     let isValid = true;

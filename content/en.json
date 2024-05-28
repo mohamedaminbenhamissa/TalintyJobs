@@ -13,8 +13,8 @@
     "fullRemote": "Full Remote",
     "STAGE": "Internship",
     "Share": "Share this opportunity ",
-    "LatestJobs" : "Latest Jobs",
-    "notAvailable" : "Not available"
+    "notAvailable": "Not available",
+    "CDI": "CDI"
   },
   "details": {
     "btnBackToHome": "Back To Home",
@@ -48,9 +48,8 @@
     "emailError": "Email cannot be empty.",
     "emailError2": "Invalid email address.",
     "fileError": "Only PDF or TXT files are allowed.",
-    "notAvailable" : "Not available",
-    "remoteTypes": "Remote Types"
-    
-
+    "notAvailable": "Not available",
+    "remoteTypes": "Remote Types",
+    "CDI": "CDI"
   }
 }

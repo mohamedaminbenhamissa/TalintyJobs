@@ -13,8 +13,8 @@
     "STAGE": "تدريب صيفي",
     "fullRemote": "كامل عن بُعد",
     "Share": "شارك هذه الفرصة مع مجتمعك.",
-    "LatestJobs" : "أحدث الوظائف",
-    "notAvailable": "غير متاح"
+    "notAvailable": "غير متاح",
+    "CDI": "CDI"
   },
   "details": {
     "STAGE": "تدريب صيفي",
@@ -32,6 +32,7 @@
     "experience": "الخبرة",
     "cv": "السيرة الذاتية الخاصة بك",
     "firstname": "الاسم ",
+    "noRemote": "غير متاح عن بُعد",
     "lastname": "اللقب",
     "email": "البريد الإلكتروني",
     "send": "إرسال",
@@ -46,7 +47,7 @@
     "emailError2": "عنوان البريد الإلكتروني غير صالح",
     "fileError": "الملفات المسموح بها فقط هي ملفات PDF أو TXT.",
     "notAvailable": "غير متاح",
-    "remoteTypes": "نوع العمل عن بُعد"
-  
+    "remoteTypes": "نوع العمل عن بُعد",
+    "CDI": "CDI"
   }
 }
