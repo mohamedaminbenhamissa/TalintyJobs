@@ -55,7 +55,9 @@ export default async function Job({ params }: { params: Params }) {
               {jobsArray.map((job) => (
                 <Grid item xs={12} key={job?._id}>
                   <JobDetails
-                    icon={job?.image}
+                    icon={
+                      "https://astrolab.co/wp-content/uploads/2023/10/astrolab-1.svg"
+                    }
                     title={job?.name || t("notAvailable")}
                     department={job?.department || t("notAvailable")}
                     location={job?.location || t("notAvailable")}

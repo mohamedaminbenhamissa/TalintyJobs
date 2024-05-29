@@ -47,9 +47,8 @@ const getJobs = async () => {
     const response = await axios.get(`${process.env.BACKEND_URL}job/`, {
       params: { payload: payload },
     });
-   
+
     return response.data;
-    
   } catch (error) {
     console.error("Error fetching jobs:", error);
     throw error;
@@ -75,7 +74,6 @@ export default async function Home() {
         <Stack direction={"column"}>
           <Box>
             <Grid spacing={4} direction={"column"}>
-              
               <Stack
                 direction={"row"}
                 display={"flex"}
@@ -92,7 +90,9 @@ export default async function Home() {
                   {jobs?.map((job: Job) => (
                     <Grid width={"100%"} item key={job?._id}>
                       <OverviewDoneTasks
-                        icon={job?.image || ""}
+                        icon={
+                          "https://astrolab.co/wp-content/uploads/2023/10/astrolab-1.svg"
+                        }
                         title={job?.name || t("notAvailable")}
                         department={job?.department || t("notAvailable")}
                         location={job?.location || t("notAvailable")}
