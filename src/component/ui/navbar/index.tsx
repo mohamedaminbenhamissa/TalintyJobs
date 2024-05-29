@@ -11,7 +11,7 @@ import SvgIcon from "@mui/material/SvgIcon";
 import SearchMdIcon from "@untitled-ui/icons-react/build/esm/SearchMd";
 import { Logo } from "@/component/logo";
 import { usePathname } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import axios from "axios";
 
 const SIDE_NAV_WIDTH = 280;
@@ -23,9 +23,8 @@ type Option = {
 
 export function SideNav() {
   console.log("🚀 ~ SideNav ~ SideNav:", SideNav);
-  const pathname = usePathname();
+
   const t = useTranslations("Home");
-  const locale = useLocale();
 
   const [typesOpt, setTypesOpt] = useState<Option[]>([]);
   const [departments, setDepartments] = useState<Option[]>([]);
@@ -35,32 +34,47 @@ export function SideNav() {
   const [selectedRemoteType, setSelectedRemoteType] = useState<string>("");
   const [selectedDepartment, setSelectedDepartment] = useState<string>("");
   const [selectedExperience, setSelectedExperience] = useState<string>("");
-  const [data, setData] = useState("");
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const fetchData = async () => {
     const payload = {
       params: {
         active: true,
       },
-      fields: ["_id"].join(","),
+      fields: [
+        "name",
+        "image",
+        "description",
+        "remote",
+        "location",
+        "minExperience",
+        "department",
+        "type",
+        "expire",
+        "_id",
+        "slug",
+      ].join(","),
     };
 
     try {
-      const response = await axios.get(`${process.env.BACKEND_URL}job/`, {
+      const response = await axios.get(`http://localhost:5002/api/v1/job/`, {
         params: { payload: payload },
       });
       console.log("🚀 ~ fetchData ~ response:", response);
-      setData(response.data);
+      const { jobTypes, remoteTypes } = response.data;
+      setTypesOpt(
+        jobTypes.map((type: string) => ({ text: t(type), value: type }))
+      );
+      setRemoteTypes(
+        remoteTypes.map((type: string) => ({ text: t(type), value: type }))
+      );
     } catch (error) {
       console.error("Error fetching jobs:", error);
-      throw error;
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleSearch = () => {
     // Perform search with selected filters
@@ -71,8 +85,6 @@ export function SideNav() {
       selectedExperience,
     });
   };
-
-  if (pathname.startsWith(`/${locale}/jobs`)) return null;
 
   return (
     <Drawer
@@ -150,7 +162,6 @@ export function SideNav() {
                 )}
               />
             </Stack>
-
             <Stack spacing={1}>
               <Typography variant="subtitle2">{t("department")}</Typography>
               <Autocomplete

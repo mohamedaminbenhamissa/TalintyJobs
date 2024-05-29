@@ -8,6 +8,7 @@ const nextConfig = {
     images: {
         domains: ['api.talinty.com'],
     },
+    
 };
 
 export default withNextIntl(nextConfig);
