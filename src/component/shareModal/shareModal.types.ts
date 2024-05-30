@@ -1,6 +1,6 @@
 export type ModalTermsProps = {
   isOpen: boolean;
-  title?: string;
-  auction_id?: string;
+  name?: string;
+  slug?: string;
   onClose?: () => void;
 };

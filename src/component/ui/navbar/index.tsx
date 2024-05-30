@@ -98,6 +98,7 @@ export function SideNav() {
           backgroundColor: "white",
           position: "relative",
           width: SIDE_NAV_WIDTH,
+          borderRadius: "8px",
         },
       }}
       variant="permanent"

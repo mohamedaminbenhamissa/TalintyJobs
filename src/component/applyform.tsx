@@ -45,7 +45,7 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose, jobId }) => {
         setFileError("");
       }
     },
-    [t],
+    [t]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -65,8 +65,8 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose, jobId }) => {
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data"
-          }
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
 
@@ -76,7 +76,6 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose, jobId }) => {
       throw error;
     }
   };
-  
 
   const handleSubmit = async () => {
     let isValid = true;
@@ -133,7 +132,8 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose, jobId }) => {
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-          },
+            onClose: onClose,
+          }
         );
       } catch (error) {
         console.error("Error submitting form:", error);
@@ -146,6 +146,7 @@ const ApplyForm: FC<FormProps> = ({ visible, onClose, jobId }) => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
+          onClose: onClose,
         });
       } finally {
         setSubmitting(false);

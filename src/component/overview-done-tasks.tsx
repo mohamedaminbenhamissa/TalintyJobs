@@ -61,26 +61,42 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
 }) => {
   const [showMail, setShowMail] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [blockNavigation, setBlockNavigation] = useState(false); // State to block navigation
   const router = useRouter();
   const bookMarkRef = useRef<HTMLButtonElement>(null);
+  const shareRef = useRef<HTMLButtonElement>(null);
+
   const handleClose = () => {
     setShowMail(false);
     setShowShare(false);
+    setBlockNavigation(false);
   };
+
   const locale = useLocale();
 
   const handleNavigate = (event: MouseEvent<HTMLDivElement>) => {
     if (
-      bookMarkRef.current &&
-      bookMarkRef.current.contains(event.target as Node)
+      blockNavigation ||
+      (bookMarkRef.current &&
+        bookMarkRef.current.contains(event.target as Node)) ||
+      (shareRef.current && shareRef.current.contains(event.target as Node))
     ) {
       event.stopPropagation();
       return;
     }
     router.push(`/jobs/${slug}`);
   };
-  const handleBookmark = () => {
+
+  const handleBookmark = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
     setShowMail(true);
+    setBlockNavigation(true);
+  };
+
+  const handleShare = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    setShowShare(true);
+    setBlockNavigation(true);
   };
 
   const t = useTranslations("Home");
@@ -121,7 +137,7 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
                     <Box>
                       <Button
                         ref={bookMarkRef}
-                        onClick={() => handleBookmark()}
+                        onClick={handleBookmark}
                         sx={{
                           bgcolor: "#fff",
                           pt: 2,
@@ -138,6 +154,8 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
                         <BookmarkBorderIcon />
                       </Button>
                       <Button
+                        ref={shareRef}
+                        onClick={handleShare}
                         sx={{
                           bgcolor: "#fff",
                           pt: 1,
@@ -150,7 +168,6 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
                             color: "#fff",
                           },
                         }}
-                        onClick={() => setShowShare(true)}
                       >
                         <ShareIcon />
                       </Button>
@@ -170,6 +187,23 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
                         alignItems="center"
                       >
                         <SendMail onClose={handleClose} visible={showMail} />
+                      </Box>
+                    )}
+                  </Box>
+                  <Box position="relative">
+                    {showShare && (
+                      <Box
+                        position="fixed"
+                        top={0}
+                        left={0}
+                        width="100%"
+                        height="100%"
+                        zIndex={999}
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                      >
+                        <Share onClose={handleClose} isOpen={showShare} />
                       </Box>
                     )}
                   </Box>
@@ -235,26 +269,6 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
                 </Box>
               </Stack>
             </Box>
-
-            <Stack display={"flex"} alignItems={"flex-end"}>
-              <Box position="relative">
-                {showShare && (
-                  <Box
-                    position="fixed"
-                    top={0}
-                    left={0}
-                    width="100%"
-                    height="100%"
-                    zIndex={999}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                  >
-                    <Share onClose={handleClose} isOpen={showShare} />
-                  </Box>
-                )}
-              </Box>
-            </Stack>
           </Stack>
         </Card>
       </div>
