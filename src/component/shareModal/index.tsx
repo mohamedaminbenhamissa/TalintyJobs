@@ -23,7 +23,7 @@ import {
 import { Stack } from "@mui/system";
 
 const Share: FC<ModalTermsProps> = (props) => {
-  const { isOpen, auction_id, title, onClose } = props;
+  const { isOpen, slug, name, onClose } = props;
   const t = useTranslations("Home");
 
   return (
@@ -34,8 +34,8 @@ const Share: FC<ModalTermsProps> = (props) => {
         <Stack direction={"column"} gap={3}>
           <Stack direction={"row"} gap={3}>
             <FacebookShareButton
-              title={title}
-              url={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/auctions/${auction_id}`}
+              title={name}
+              url={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/auctions/${slug}`}
             >
               <FacebookIcon
                 style={{ borderEndStartRadius: 15, borderStartEndRadius: 15 }}
@@ -43,16 +43,16 @@ const Share: FC<ModalTermsProps> = (props) => {
             </FacebookShareButton>
 
             <TwitterShareButton
-              title={title}
-              url={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/auctions/${auction_id}`}
+              title={name}
+              url={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/jobs/${slug}`}
             >
               <TwitterIcon
                 style={{ borderEndStartRadius: 15, borderStartEndRadius: 15 }}
               />
             </TwitterShareButton>
             <WhatsappShareButton
-              title={title}
-              url={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/auctions/${auction_id}`}
+              title={name}
+              url={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/jobs/${slug}`}
             >
               <WhatsappIcon
                 style={{ borderEndStartRadius: 15, borderStartEndRadius: 15 }}
@@ -61,8 +61,8 @@ const Share: FC<ModalTermsProps> = (props) => {
           </Stack>
           <Stack direction={"row"} gap={3}>
             <TelegramShareButton
-              title={title}
-              url={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/auctions/${auction_id}`}
+              title={name}
+              url={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/jobs/${slug}`}
             >
               <TelegramIcon
                 style={{ borderEndStartRadius: 15, borderStartEndRadius: 15 }}
@@ -70,8 +70,8 @@ const Share: FC<ModalTermsProps> = (props) => {
             </TelegramShareButton>
 
             <EmailShareButton
-              subject={title}
-              url={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/auctions/${auction_id}`}
+              subject={name}
+              url={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/jobs/${slug}`}
             >
               <EmailIcon
                 style={{ borderEndStartRadius: 15, borderStartEndRadius: 15 }}
@@ -80,7 +80,7 @@ const Share: FC<ModalTermsProps> = (props) => {
             <Box
               onClick={() => {
                 navigator.clipboard.writeText(
-                  `${process.env.NEXT_PUBLIC_DOMAIN_URL}/auctions/${auction_id}`,
+                  `${process.env.NEXT_PUBLIC_DOMAIN_URL}/jobs/${slug}`
                 );
 
                 !!onClose && onClose();

@@ -71,6 +71,7 @@ export default async function Home() {
         <Stack padding={2}>
           <SideNav />
         </Stack>
+
         <Stack direction={"column"}>
           <Box>
             <Grid spacing={4} direction={"column"}>
@@ -79,7 +80,7 @@ export default async function Home() {
                 display={"flex"}
                 justifyContent="space-between"
               >
-                <Typography variant="h5"> {t("homeTitle")}</Typography>
+                <Typography variant="h5">{t("homeTitle")}</Typography>
                 <Stack direction="row" spacing={4}>
                   <LocalSwitcher />
                 </Stack>
