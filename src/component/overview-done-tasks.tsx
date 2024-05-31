@@ -26,7 +26,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import parse from "html-react-parser";
 import { useRouter } from "@/navigation";
 
-interface OverviewDoneTasksProps {
+type OverviewDoneTasksProps = {
   icon: string;
   title: string;
   department: string;
@@ -37,7 +37,7 @@ interface OverviewDoneTasksProps {
   description: string;
   remote: string;
   slug: string;
-}
+};
 
 const Paragraph = styled("div")({
   display: "-webkit-box",
@@ -61,7 +61,7 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
 }) => {
   const [showMail, setShowMail] = useState(false);
   const [showShare, setShowShare] = useState(false);
-  const [blockNavigation, setBlockNavigation] = useState(false); // State to block navigation
+  const [blockNavigation, setBlockNavigation] = useState(false);
   const router = useRouter();
   const bookMarkRef = useRef<HTMLButtonElement>(null);
   const shareRef = useRef<HTMLButtonElement>(null);
@@ -203,7 +203,11 @@ export const OverviewDoneTasks: FC<OverviewDoneTasksProps> = ({
                         justifyContent="center"
                         alignItems="center"
                       >
-                        <Share onClose={handleClose} isOpen={showShare} />
+                        <Share
+                          onClose={handleClose}
+                          isOpen={showShare}
+                          slug={slug}
+                        />
                       </Box>
                     )}
                   </Box>
