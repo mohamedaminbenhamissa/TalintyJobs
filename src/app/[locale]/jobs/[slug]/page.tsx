@@ -7,7 +7,7 @@ import { JobBody } from "@/component/jobBody";
 import { JobOverview } from "@/component/jobOverview";
 import parse from "html-react-parser";
 import { Link } from "@/navigation";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
 const getJob = async (jobId: string) => {
   try {
@@ -73,13 +73,14 @@ export default async function Job({ params }: { params: Params }) {
           </Box>
 
           <Stack
-            direction={"row"}
+            direction={{ xs: "column", sm: "row" }}
             display={"flex"}
             justifyContent="space-between"
+            spacing={{ xs: 2, sm: 0 }}
             marginLeft={4}
             marginRight={2}
           >
-            <Box>
+            <Box width={{ xs: "100%", sm: "50%" }}>
               {jobsArray.map((job) => (
                 <Grid item xs={12} key={job?._id}>
                   <JobBody

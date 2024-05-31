@@ -13,6 +13,9 @@ import { Logo } from "@/component/logo";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import axios from "axios";
+import { useMediaQuery, useTheme } from "@mui/system";
+import MenuIcon from "@mui/icons-material/Menu";
+import { IconButton } from "@mui/material";
 
 const SIDE_NAV_WIDTH = 280;
 
@@ -25,7 +28,9 @@ export function SideNav() {
   console.log("🚀 ~ SideNav ~ SideNav:", SideNav);
 
   const t = useTranslations("Home");
-
+  const theme = useTheme();
+  const [mobileTopBarOpen, setMobileTopBarOpen] = useState(false);
+  const isMobileOrTablet = useMediaQuery(theme.breakpoints.down("sm"));
   const [typesOpt, setTypesOpt] = useState<Option[]>([]);
   const [departments, setDepartments] = useState<Option[]>([]);
   const [minExperience, setMinExperience] = useState<Option[]>([]);
@@ -85,142 +90,334 @@ export function SideNav() {
       selectedExperience,
     });
   };
+  const toggleMobileTopBar = () => {
+    setMobileTopBarOpen(!mobileTopBarOpen);
+  };
+  const openMobileTopBar = () => {
+    setMobileTopBarOpen(true);
+  };
 
   return (
-    <Drawer
-      anchor="left"
-      open
-      PaperProps={{
-        elevation: 3,
-        sx: {
-          overflowY: "auto",
-          maxHeight: "100vh",
-          backgroundColor: "white",
-          position: "relative",
-          width: SIDE_NAV_WIDTH,
-          borderRadius: "8px",
-        },
-      }}
-      variant="permanent"
-    >
-      <Stack sx={{ height: "100%", overflowY: "auto" }}>
-        <Stack alignItems="center" direction="row" spacing={2} sx={{ p: 2 }}>
-          <Logo />
-        </Stack>
+    <>
+      {isMobileOrTablet ? (
+        <Box>
+          <IconButton
+            onClick={openMobileTopBar}
+            color="primary"
+            sx={{
+              position: "fixed",
+              zIndex: 999,
+              top: 10,
+              left: 10,
+            }}
+          >
+            <MenuIcon sx={{ color: "#000" }} />
+          </IconButton>
+          <Drawer
+            anchor="top"
+            open={mobileTopBarOpen}
+            onClose={() => setMobileTopBarOpen(false)}
+            PaperProps={{
+              elevation: 3,
+              sx: {
+                overflowY: "auto",
+                backgroundColor: "white",
+                position: "relative",
+                minHeight: 64,
+                borderRadius: "8px",
 
-        <Box sx={{ p: 2 }}>
-          <Stack spacing={2}>
-            <Stack spacing={1}>
-              <Typography variant="subtitle2">{t("search")}</Typography>
-              <OutlinedInput
-                fullWidth
-                placeholder={t("search")}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SvgIcon>
-                      <SearchMdIcon />
-                    </SvgIcon>
-                  </InputAdornment>
-                }
-              />
-            </Stack>
-            <Stack spacing={1}>
-              <Typography variant="subtitle2">{t("type")}</Typography>
-              <Autocomplete
-                getOptionLabel={(option: Option) => option.text}
-                options={typesOpt}
-                onChange={(event, value) =>
-                  setSelectedType(value ? value.value : "")
-                }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    fullWidth
-                    label={t("type")}
-                    name="type"
-                  />
-                )}
-              />
-            </Stack>
-
-            <Stack spacing={1}>
-              <Typography variant="subtitle2">{t("remoteTypes")}</Typography>
-              <Autocomplete
-                getOptionLabel={(option: Option) => option.text}
-                options={remoteTypes}
-                onChange={(event, value) =>
-                  setSelectedRemoteType(value ? value.value : "")
-                }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    fullWidth
-                    label={t("remoteTypes")}
-                    name="type"
-                  />
-                )}
-              />
-            </Stack>
-            <Stack spacing={1}>
-              <Typography variant="subtitle2">{t("department")}</Typography>
-              <Autocomplete
-                getOptionLabel={(option: Option) => option.text}
-                options={departments}
-                onChange={(event, value) =>
-                  setSelectedDepartment(value ? value.value : "")
-                }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    fullWidth
-                    label={t("department")}
-                    name="department"
-                  />
-                )}
-              />
-            </Stack>
-            <Stack spacing={1}>
-              <Typography variant="subtitle2">
-                {t("experienceLevel")}
-              </Typography>
-              <Autocomplete
-                getOptionLabel={(option: Option) => option.text}
-                options={minExperience}
-                onChange={(event, value) =>
-                  setSelectedExperience(value ? value.value : "")
-                }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    fullWidth
-                    label={t("experienceLevel")}
-                    name="experienceLevel"
-                  />
-                )}
-              />
-            </Stack>
-
-            <Stack spacing={1}>
-              <Button
-                onClick={handleSearch}
+                "@media (max-width: 600px)": {
+                  minWidth: "100%",
+                },
+              },
+            }}
+            variant="temporary"
+          >
+            <Stack
+              alignItems="center"
+              direction="row"
+              spacing={2}
+              sx={{ p: 2 }}
+            >
+              <IconButton
+                onClick={toggleMobileTopBar}
+                color="primary"
                 sx={{
-                  bgcolor: "#F3CB05",
-                  color: "#fff",
-                  "&:hover": {
-                    bgcolor: "black",
-                  },
+                  position: "fixed",
+                  zIndex: 999,
+                  top: 10,
+                  left: 10,
                 }}
               >
-                {t("findJobsbtn")}
-              </Button>
+                <MenuIcon sx={{ color: "#000" }} />
+              </IconButton>
+              <Logo />
+              <Button onClick={toggleMobileTopBar}>Close</Button>
             </Stack>
-          </Stack>
+
+            <Box sx={{ p: 2 }}>
+              <Stack spacing={2}>
+                <Stack spacing={1}>
+                  <Typography variant="subtitle2">{t("search")}</Typography>
+                  <OutlinedInput
+                    fullWidth
+                    placeholder={t("search")}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <SvgIcon>
+                          <SearchMdIcon />
+                        </SvgIcon>
+                      </InputAdornment>
+                    }
+                  />
+                </Stack>
+                <Stack spacing={1}>
+                  <Typography variant="subtitle2">{t("type")}</Typography>
+                  <Autocomplete
+                    getOptionLabel={(option: Option) => option.text}
+                    options={typesOpt}
+                    onChange={(event, value) =>
+                      setSelectedType(value ? value.value : "")
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        fullWidth
+                        label={t("type")}
+                        name="type"
+                      />
+                    )}
+                  />
+                </Stack>
+
+                <Stack spacing={1}>
+                  <Typography variant="subtitle2">
+                    {t("remoteTypes")}
+                  </Typography>
+                  <Autocomplete
+                    getOptionLabel={(option: Option) => option.text}
+                    options={remoteTypes}
+                    onChange={(event, value) =>
+                      setSelectedRemoteType(value ? value.value : "")
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        fullWidth
+                        label={t("remoteTypes")}
+                        name="type"
+                      />
+                    )}
+                  />
+                </Stack>
+                <Stack spacing={1}>
+                  <Typography variant="subtitle2">{t("department")}</Typography>
+                  <Autocomplete
+                    getOptionLabel={(option: Option) => option.text}
+                    options={departments}
+                    onChange={(event, value) =>
+                      setSelectedDepartment(value ? value.value : "")
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        fullWidth
+                        label={t("department")}
+                        name="department"
+                      />
+                    )}
+                  />
+                </Stack>
+                <Stack spacing={1}>
+                  <Typography variant="subtitle2">
+                    {t("experienceLevel")}
+                  </Typography>
+                  <Autocomplete
+                    getOptionLabel={(option: Option) => option.text}
+                    options={minExperience}
+                    onChange={(event, value) =>
+                      setSelectedExperience(value ? value.value : "")
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        fullWidth
+                        label={t("experienceLevel")}
+                        name="experienceLevel"
+                      />
+                    )}
+                  />
+                </Stack>
+
+                <Stack spacing={1}>
+                  <Button
+                    onClick={handleSearch}
+                    sx={{
+                      bgcolor: "#F3CB05",
+                      color: "#fff",
+                      "&:hover": {
+                        bgcolor: "black",
+                      },
+                    }}
+                  >
+                    {t("findJobsbtn")}
+                  </Button>
+                </Stack>
+              </Stack>
+            </Box>
+          </Drawer>
         </Box>
-      </Stack>
-    </Drawer>
+      ) : (
+        <Drawer
+          anchor="left"
+          open
+          PaperProps={{
+            elevation: 3,
+            sx: {
+              overflowY: "auto",
+              backgroundColor: "white",
+              position: "relative",
+              minWidth: 280,
+              borderRadius: "8px",
+
+              "@media (max-width: 600px)": {
+                minWidth: "100%",
+              },
+            },
+          }}
+          variant="permanent"
+        >
+          <Stack sx={{ height: "100%", overflowY: "auto" }}>
+            <Stack
+              alignItems="center"
+              direction="row"
+              spacing={2}
+              sx={{ p: 2 }}
+            >
+              <Logo />
+            </Stack>
+
+            <Box sx={{ p: 2 }}>
+              <Stack spacing={2}>
+                <Stack spacing={1}>
+                  <Typography variant="subtitle2">{t("search")}</Typography>
+                  <OutlinedInput
+                    fullWidth
+                    placeholder={t("search")}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <SvgIcon>
+                          <SearchMdIcon />
+                        </SvgIcon>
+                      </InputAdornment>
+                    }
+                  />
+                </Stack>
+                <Stack spacing={1}>
+                  <Typography variant="subtitle2">{t("type")}</Typography>
+                  <Autocomplete
+                    getOptionLabel={(option: Option) => option.text}
+                    options={typesOpt}
+                    onChange={(event, value) =>
+                      setSelectedType(value ? value.value : "")
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        fullWidth
+                        label={t("type")}
+                        name="type"
+                      />
+                    )}
+                  />
+                </Stack>
+
+                <Stack spacing={1}>
+                  <Typography variant="subtitle2">
+                    {t("remoteTypes")}
+                  </Typography>
+                  <Autocomplete
+                    getOptionLabel={(option: Option) => option.text}
+                    options={remoteTypes}
+                    onChange={(event, value) =>
+                      setSelectedRemoteType(value ? value.value : "")
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        fullWidth
+                        label={t("remoteTypes")}
+                        name="type"
+                      />
+                    )}
+                  />
+                </Stack>
+                <Stack spacing={1}>
+                  <Typography variant="subtitle2">{t("department")}</Typography>
+                  <Autocomplete
+                    getOptionLabel={(option: Option) => option.text}
+                    options={departments}
+                    onChange={(event, value) =>
+                      setSelectedDepartment(value ? value.value : "")
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        fullWidth
+                        label={t("department")}
+                        name="department"
+                      />
+                    )}
+                  />
+                </Stack>
+                <Stack spacing={1}>
+                  <Typography variant="subtitle2">
+                    {t("experienceLevel")}
+                  </Typography>
+                  <Autocomplete
+                    getOptionLabel={(option: Option) => option.text}
+                    options={minExperience}
+                    onChange={(event, value) =>
+                      setSelectedExperience(value ? value.value : "")
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        fullWidth
+                        label={t("experienceLevel")}
+                        name="experienceLevel"
+                      />
+                    )}
+                  />
+                </Stack>
+
+                <Stack spacing={1}>
+                  <Button
+                    onClick={handleSearch}
+                    sx={{
+                      bgcolor: "#F3CB05",
+                      color: "#fff",
+                      "&:hover": {
+                        bgcolor: "black",
+                      },
+                    }}
+                  >
+                    {t("findJobsbtn")}
+                  </Button>
+                </Stack>
+              </Stack>
+            </Box>
+          </Stack>
+        </Drawer>
+      )}
+    </>
   );
 }
