@@ -10,12 +10,15 @@ import TextField from "@mui/material/TextField";
 import SvgIcon from "@mui/material/SvgIcon";
 import SearchMdIcon from "@untitled-ui/icons-react/build/esm/SearchMd";
 import { Logo } from "@/component/logo";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useMediaQuery, useTheme } from "@mui/system";
 import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton } from "@mui/material";
+import { SearchFilters, handleSearch } from "@/component/search";
+import { useRouter } from "@/navigation";
 
 const SIDE_NAV_WIDTH = 280;
 
@@ -25,8 +28,6 @@ type Option = {
 };
 
 export function SideNav() {
-  console.log("🚀 ~ SideNav ~ SideNav:", SideNav);
-
   const t = useTranslations("Home");
   const theme = useTheme();
   const [mobileTopBarOpen, setMobileTopBarOpen] = useState(false);
@@ -39,7 +40,9 @@ export function SideNav() {
   const [selectedRemoteType, setSelectedRemoteType] = useState<string>("");
   const [selectedDepartment, setSelectedDepartment] = useState<string>("");
   const [selectedExperience, setSelectedExperience] = useState<string>("");
+  const [name, setName] = useState<string>("");
 
+  const router = useRouter();
   const fetchData = async () => {
     const payload = {
       params: {
@@ -64,7 +67,7 @@ export function SideNav() {
       const response = await axios.get(`http://localhost:5002/api/v1/job/`, {
         params: { payload: payload },
       });
-      console.log("🚀 ~ fetchData ~ response:", response);
+      console.log("🚀 ~ fetchData------ ~ response:", response);
       const { jobTypes, remoteTypes } = response.data;
       setTypesOpt(
         jobTypes.map((type: string) => ({ text: t(type), value: type }))
@@ -81,15 +84,21 @@ export function SideNav() {
     fetchData();
   }, []);
 
-  const handleSearch = () => {
-    // Perform search with selected filters
-    console.log("Searching with filters:", {
-      selectedType,
-      selectedRemoteType,
-      selectedDepartment,
-      selectedExperience,
-    });
+  const onSearch = () => {
+    const searchFilters = {
+      name: name,
+      type: selectedType,
+      remote: selectedRemoteType,
+      department: selectedDepartment,
+      experience: selectedExperience,
+    };
+
+    const queryString = new URLSearchParams(searchFilters).toString();
+
+    console.log("----", queryString);
+    router.push(`/?${queryString}`);
   };
+
   const toggleMobileTopBar = () => {
     setMobileTopBarOpen(!mobileTopBarOpen);
   };
@@ -152,7 +161,6 @@ export function SideNav() {
                 <MenuIcon sx={{ color: "#000" }} />
               </IconButton>
               <Logo />
-              <Button onClick={toggleMobileTopBar}>Close</Button>
             </Stack>
 
             <Box sx={{ p: 2 }}>
@@ -169,6 +177,8 @@ export function SideNav() {
                         </SvgIcon>
                       </InputAdornment>
                     }
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </Stack>
                 <Stack spacing={1}>
@@ -255,7 +265,7 @@ export function SideNav() {
 
                 <Stack spacing={1}>
                   <Button
-                    onClick={handleSearch}
+                    onClick={onSearch}
                     sx={{
                       bgcolor: "#F3CB05",
                       color: "#fff",
@@ -315,6 +325,8 @@ export function SideNav() {
                         </SvgIcon>
                       </InputAdornment>
                     }
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </Stack>
                 <Stack spacing={1}>
@@ -401,7 +413,7 @@ export function SideNav() {
 
                 <Stack spacing={1}>
                   <Button
-                    onClick={handleSearch}
+                    onClick={onSearch}
                     sx={{
                       bgcolor: "#F3CB05",
                       color: "#fff",
